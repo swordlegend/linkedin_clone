@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.linkedin">
+    package="io.github.imobasshir.linkedin">
    <application
         android:label="linkedin"
         android:name="${applicationName}"
