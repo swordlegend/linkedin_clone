@@ -1,37 +1,45 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linkedin/common/common.dart';
 import 'package:linkedin/constants/constants.dart';
+import 'package:linkedin/features/auth/controllers/auth_controller.dart';
 import 'package:linkedin/features/auth/views/signup_view.dart';
 import 'package:linkedin/features/auth/widgets/auth_field.dart';
 import 'package:linkedin/theme/theme.dart';
 
-class SignInView extends StatefulWidget {
+class SignInView extends ConsumerStatefulWidget {
   static route() => MaterialPageRoute(
         builder: (context) => const SignInView(),
       );
   const SignInView({super.key});
 
   @override
-  State<SignInView> createState() => _SignInViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _SignInViewState();
 }
 
-class _SignInViewState extends State<SignInView> {
+class _SignInViewState extends ConsumerState<SignInView> {
+  final appbar = UIConstants.appBar();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  void onSignin() {
+    ref.read(authControllerProvider.notifier).signIn(
+          email: emailController.text,
+          password: passwordController.text,
+          context: context,
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final appbar = UIConstants.appBar();
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
-
-    // @override
-    // void dispose() {
-    //   emailController.dispose();
-    //   passwordController.dispose();
-    //   super.dispose();
-    // }
-
-    void onSignin() {}
-
     return Scaffold(
       appBar: appbar,
       body: SingleChildScrollView(
@@ -39,7 +47,7 @@ class _SignInViewState extends State<SignInView> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              const SizedBox(height: 100),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.15),
               Container(
                 decoration: BoxDecoration(
                   color: Pallete.lightBackgroundColor,
@@ -76,7 +84,7 @@ class _SignInViewState extends State<SignInView> {
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          'Stay updated on your professional world',
+                          'Stay updated on your professional world.',
                           style: TextStyle(
                             fontSize: 14,
                           ),

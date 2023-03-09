@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:linkedin/features/auth/controllers/auth_controller.dart';
 
 class HomeView extends StatefulWidget {
   static route() => MaterialPageRoute(
@@ -13,6 +15,24 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('Home'),
+            Consumer(builder: (context, ref, child) {
+              return TextButton(
+                onPressed: () {
+                  ref.read(authControllerProvider.notifier).logout(context);
+                },
+                child: const Text('Sign Out'),
+              );
+            }),
+          ],
+        ),
+      ),
+    );
   }
 }

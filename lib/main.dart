@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:linkedin/common/common.dart';
+import 'package:linkedin/features/auth/controllers/auth_controller.dart';
 import 'package:linkedin/features/auth/views/signin_view.dart';
+import 'package:linkedin/features/home/views/home_view.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
 import 'theme/theme.dart';
 
@@ -23,9 +26,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'LinkedIn',
-      theme: AppTheme.theme,
-      home: const SignInView(),
-    );
+        title: 'LinkedIn',
+        theme: AppTheme.theme,
+        home: Consumer(
+          builder: (context, ref, child) {
+            return ref.watch(currentUserProvider).when(
+                  data: (user) {
+                    if (user == null) {
+                      return const SignInView();
+                    }
+                    return const HomeView();
+                  },
+                  loading: () => const Center(
+                    child: LoadingPage(),
+                  ),
+                  error: (error, stack) => ErrorPage(error: error.toString()),
+                );
+          },
+        ));
   }
 }

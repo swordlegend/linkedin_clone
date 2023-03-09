@@ -1,37 +1,50 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linkedin/common/common.dart';
 import 'package:linkedin/constants/constants.dart';
+import 'package:linkedin/features/auth/controllers/auth_controller.dart';
 import 'package:linkedin/features/auth/views/signin_view.dart';
 import 'package:linkedin/features/auth/widgets/auth_field.dart';
+import 'package:linkedin/features/auth/widgets/google_button.dart';
 import 'package:linkedin/theme/theme.dart';
 
-class SignUpView extends StatefulWidget {
+class SignUpView extends ConsumerStatefulWidget {
   static route() => MaterialPageRoute(
         builder: (context) => const SignUpView(),
       );
   const SignUpView({super.key});
 
   @override
-  State<SignUpView> createState() => _SignUpViewState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _SignUpViewState();
 }
 
-class _SignUpViewState extends State<SignUpView> {
+class _SignUpViewState extends ConsumerState<SignUpView> {
+  final appbar = UIConstants.appBar();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  void onSignUp() {
+    ref.read(authControllerProvider.notifier).signUp(
+          email: emailController.text,
+          password: passwordController.text,
+          context: context,
+        );
+  }
+
+  void onGoogleSignUp() {
+    ref.read(authControllerProvider.notifier).googleSignIn(context);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final appbar = UIConstants.appBar();
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
-
-    // @override
-    // void dispose() {
-    //   emailController.dispose();
-    //   passwordController.dispose();
-    //   super.dispose();
-    // }
-
-    void onSignUp() {}
-
     return Scaffold(
       appBar: appbar,
       body: SingleChildScrollView(
@@ -39,7 +52,7 @@ class _SignUpViewState extends State<SignUpView> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              const SizedBox(height: 100),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.1),
               Container(
                 decoration: BoxDecoration(
                   color: Pallete.lightBackgroundColor,
@@ -115,17 +128,29 @@ class _SignUpViewState extends State<SignUpView> {
                       ),
                     ),
                     const SizedBox(height: 20),
+                    const Divider(
+                      color: Pallete.backgroundColor,
+                      indent: 16.0,
+                      endIndent: 16.0,
+                      thickness: 2,
+                    ),
+                    const SizedBox(height: 16),
+                    GoogleButton(
+                      label: 'Sign up with Google',
+                      onPressed: onGoogleSignUp,
+                    ),
+                    const SizedBox(height: 20),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 12.0),
                       child: RichText(
                         text: TextSpan(
-                          text: 'Already have an account?',
+                          text: 'Already registered?',
                           style: const TextStyle(
                             fontSize: 18,
                           ),
                           children: [
                             TextSpan(
-                              text: ' Sign In',
+                              text: ' Log In',
                               style: const TextStyle(
                                 color: Pallete.blueColor,
                                 fontSize: 18,
