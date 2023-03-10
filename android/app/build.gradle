@@ -51,6 +51,9 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        manifestPlaceholders += [
+         'appAuthRedirectScheme': 'http://localhost/v1/account/sessions/oauth2/callback/google/640991b1cad129e5eb08'
+        ]
     }
 
     buildTypes {
