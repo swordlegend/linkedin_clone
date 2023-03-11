@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:linkedin/common/common.dart';
-import 'package:linkedin/features/auth/controllers/auth_controller.dart';
+import 'package:linkedin/constants/constants.dart';
+import 'package:linkedin/features/home/widgets/side_drawer.dart';
+import 'package:linkedin/theme/pallete.dart';
 
 class HomeView extends ConsumerStatefulWidget {
   static route() => MaterialPageRoute(
@@ -14,41 +16,112 @@ class HomeView extends ConsumerStatefulWidget {
 }
 
 class _HomeViewState extends ConsumerState<HomeView> {
+  int page = 0;
+
+  void onPageChange(int index) {
+    setState(() {
+      page = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final currentUser = ref.watch(currentUserDetailProvider);
-
     return Scaffold(
-      appBar: AppBar(),
-      body: currentUser.when(
-        data: (data) {
-          return Center(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      data.profilePic,
-                      // : 'https://en.wikipedia.org/wiki/Image#/media/File:Image_created_with_a_mobile_phone.png',
-                    ),
-                  ),
-                  Text(data.name),
-                  Text(data.email),
-                  Text(data.uid),
-                  TextButton(
-                    onPressed: () {
-                      ref.read(authControllerProvider.notifier).logout(context);
-                    },
-                    child: const Text('Sign Out'),
-                  )
-                ],
+      appBar: AppBar(
+        title: Container(
+          width: MediaQuery.of(context).size.width * 0.65,
+          padding: const EdgeInsets.symmetric(vertical: 6),
+          decoration: BoxDecoration(
+            color: Pallete.searchBarColor,
+            borderRadius: BorderRadius.circular(6),
+          ),
+          child: Row(
+            children: const [
+              SizedBox(
+                width: 6,
               ),
+              Icon(
+                Icons.search,
+                color: Pallete.whiteColor,
+              ),
+              SizedBox(
+                width: 6,
+              ),
+              Text(
+                'Search',
+                style: TextStyle(
+                  color: Pallete.whiteColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.message_rounded),
+          ),
+        ],
+      ),
+      body: IndexedStack(
+        index: page,
+        children: UIConstants.bottomTabBarPages,
+      ),
+      floatingActionButton: page == 1
+          ? FloatingActionButton(
+              onPressed: () {},
+              child: const Icon(
+                Icons.person_add_alt_1_rounded,
+                color: Pallete.whiteColor,
+                size: 28,
+              ),
+            )
+          : null,
+      drawer: const SideDrawer(),
+      bottomNavigationBar: CupertinoTabBar(
+        backgroundColor: Pallete.lightBackgroundColor,
+        currentIndex: page,
+        iconSize: 24,
+        onTap: onPageChange,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              page == 0 ? CupertinoIcons.home : Icons.home_rounded,
+              color: Pallete.whiteColor,
             ),
-          );
-        },
-        error: (error, stack) => ErrorPage(error: error.toString()),
-        loading: () => const LoadingPage(),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              page == 1 ? Icons.people_alt_rounded : Icons.people_sharp,
+              color: Pallete.whiteColor,
+            ),
+            label: 'Network',
+          ),
+          const BottomNavigationBarItem(
+            icon: Icon(
+              Icons.add_box,
+              color: Pallete.whiteColor,
+            ),
+            label: 'Post',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              page == 3 ? Icons.notifications_rounded : Icons.notifications,
+              color: Pallete.whiteColor,
+            ),
+            label: 'Notifications',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              page == 4 ? Icons.work_rounded : Icons.work_outline_rounded,
+              color: Pallete.whiteColor,
+            ),
+            label: 'Jobs',
+          ),
+        ],
       ),
     );
   }

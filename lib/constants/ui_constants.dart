@@ -19,16 +19,16 @@ class UIConstants {
     );
   }
 
-  // static const List<Widget> bottomTabBarPages = [
-  //   // Center(child: Text('Home')),
-  //   TweetList(),
-  //   // Center(child: Text('Explore')),
-  //   ExploreView(),
-  //   Center(child: Text('Space')),
-  //   // SpacesView(),
-  //   // Center(child: Text('Notifications')),
-  //   NotificationView(),
-  //   Center(child: Text('Messages')),
-  //   // MessagesView(),
-  // ];
+  static const List<Widget> bottomTabBarPages = [
+    Center(child: Text('Home')),
+    // HomeView(),
+    Center(child: Text('Network')),
+    // NetworkView(),
+    Center(child: Text('Post')),
+    // PostView(),
+    Center(child: Text('Notifications')),
+    // NotificationView(),
+    Center(child: Text('Jobs')),
+    // JobsView(),
+  ];
 }

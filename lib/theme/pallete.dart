@@ -7,7 +7,7 @@ class Pallete {
   static const Color searchBarColor = Color.fromRGBO(56, 67, 79, 1);
   static const Color blueColor = Color.fromRGBO(29, 155, 240, 1);
   static const Color darkBlueColor = Color.fromRGBO(0, 82, 204, 1);
-  static const Color lightBlueColor = Color.fromRGBO(112, 180, 248, 0.5);
+  static const Color lightBlueColor = Color.fromRGBO(112, 180, 248, 1);
   static const Color blackColor = Colors.black;
   static const Color whiteColor = Colors.white;
   static const Color greyColor = Colors.grey;
