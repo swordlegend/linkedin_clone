@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linkedin/common/common.dart';
 import 'package:linkedin/features/auth/controllers/auth_controller.dart';
 import 'package:linkedin/features/home/widgets/settings_view.dart';
+import 'package:linkedin/features/profile/views/profile_views.dart';
 import 'package:linkedin/theme/pallete.dart';
 
 class SideDrawer extends ConsumerWidget {
@@ -24,9 +25,16 @@ class SideDrawer extends ConsumerWidget {
                   padding: const EdgeInsets.only(left: 18.0),
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(data.profilePic),
-                      radius: 28.0,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          ProfileView.route(),
+                        );
+                      },
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(data.profilePic),
+                        radius: 28.0,
+                      ),
                     ),
                   ),
                 ),

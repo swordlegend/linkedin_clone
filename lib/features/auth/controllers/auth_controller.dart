@@ -25,6 +25,11 @@ final currentUserDetailProvider = FutureProvider.autoDispose((ref) {
   return userDetail;
 });
 
+final userDetailsProvider = FutureProvider.family.autoDispose((ref, String uid) {
+  final authController = ref.watch(authControllerProvider.notifier);
+  return authController.getUserData(uid);
+});
+
 class AuthController extends StateNotifier<bool> {
   final AuthApi _authApi;
   final UserApi _userApi;
@@ -67,6 +72,7 @@ class AuthController extends StateNotifier<bool> {
         email: email,
         name: getNameFromEmail(email),
         profilePic: 'https://avatars.githubusercontent.com/u/62945306?v=4',
+        // profilePic: 'https://avatars.githubusercontent.com/u/108295554?v=4',
         bannerPic: '',
         uid: r.$id,
         bio: '',

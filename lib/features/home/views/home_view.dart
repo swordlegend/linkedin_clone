@@ -28,34 +28,37 @@ class _HomeViewState extends ConsumerState<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Container(
-          width: MediaQuery.of(context).size.width * 0.65,
-          padding: const EdgeInsets.symmetric(vertical: 6),
-          decoration: BoxDecoration(
-            color: Pallete.searchBarColor,
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Row(
-            children: const [
-              SizedBox(
-                width: 6,
-              ),
-              Icon(
-                Icons.search,
-                color: Pallete.whiteColor,
-              ),
-              SizedBox(
-                width: 6,
-              ),
-              Text(
-                'Search',
-                style: TextStyle(
-                  color: Pallete.whiteColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
+        title: GestureDetector(
+          onTap: () {},
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.65,
+            padding: const EdgeInsets.symmetric(vertical: 6),
+            decoration: BoxDecoration(
+              color: Pallete.searchBarColor,
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Row(
+              children: const [
+                SizedBox(
+                  width: 6,
                 ),
-              ),
-            ],
+                Icon(
+                  Icons.search,
+                  color: Pallete.whiteColor,
+                ),
+                SizedBox(
+                  width: 6,
+                ),
+                Text(
+                  'Search',
+                  style: TextStyle(
+                    color: Pallete.whiteColor,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         actions: [
@@ -98,7 +101,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
               page == 1 ? Icons.people_alt_rounded : Icons.people_sharp,
               color: Pallete.whiteColor,
             ),
-            label: 'Network',
+            label: 'My Network',
           ),
           const BottomNavigationBarItem(
             icon: Icon(

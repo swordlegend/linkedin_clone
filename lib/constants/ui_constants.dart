@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkedin/constants/constants.dart';
+import 'package:linkedin/features/posts/views/post_view.dart';
+import 'package:linkedin/features/posts/views/post_list.dart';
 import 'package:linkedin/theme/theme.dart';
 
 class UIConstants {
@@ -20,12 +22,13 @@ class UIConstants {
   }
 
   static const List<Widget> bottomTabBarPages = [
-    Center(child: Text('Home')),
+    // Center(child: Text('Home')),
     // HomeView(),
-    Center(child: Text('Network')),
+    PostList(),
+    Center(child: Text('My Network')),
     // NetworkView(),
-    Center(child: Text('Post')),
-    // PostView(),
+    // Center(child: Text('Post')),
+    PostView(),
     Center(child: Text('Notifications')),
     // NotificationView(),
     Center(child: Text('Jobs')),
