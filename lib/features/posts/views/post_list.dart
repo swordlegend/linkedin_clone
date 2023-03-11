@@ -29,9 +29,8 @@ class PostList extends ConsumerWidget {
                       final postId = data.events[0]
                           .substring(startingPoint + 10, endPoint);
 
-                      var post = posts
-                          .where((element) => element.id == postId)
-                          .first;
+                      var post =
+                          posts.where((element) => element.id == postId).first;
 
                       final postIndex = posts.indexOf(post);
                       posts.removeWhere((element) => element.id == postId);

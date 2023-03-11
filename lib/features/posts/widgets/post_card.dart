@@ -24,154 +24,383 @@ class PostCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentUser = ref.watch(currentUserDetailProvider).value;
-
-    return currentUser == null
-        ? const SizedBox.shrink()
-        : ref.watch(userDetailsProvider(postModel.uid)).when(
-              data: (user) {
-                return GestureDetector(
-                  onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   PostReplyScreen.route(tweet),
-                    // );
-                  },
-                  child: Column(
-                    children: [
-                      if (postModel.resharedBy.isNotEmpty) ...[
-                        Row(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.all(10),
-                              child: GestureDetector(
-                                onTap: () {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   UserProfileView.route(user),
-                                  // );
-                                },
-                                child: CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      postModel.resharedProfilePic),
-                                  radius: 24,
-                                ),
-                              ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+    return ref.watch(currentUserDetailProvider).when(
+          data: (cUser) {
+            return cUser == null
+                ? const SizedBox.shrink()
+                : ref.watch(userDetailsProvider(postModel.uid)).when(
+                      data: (user) {
+                        return GestureDetector(
+                          onTap: () {
+                            // Navigator.push(
+                            //   context,
+                            //   PostReplyScreen.route(tweet),
+                            // );
+                          },
+                          child: Column(
+                            children: [
+                              if (postModel.resharedBy.isNotEmpty) ...[
                                 Row(
                                   children: [
                                     Container(
-                                      margin: const EdgeInsets.only(
-                                        right: 1,
-                                      ),
-                                      child: Text(
-                                        postModel.resharedBy,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 18,
+                                      margin: const EdgeInsets.all(10),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          // Navigator.push(
+                                          //   context,
+                                          //   UserProfileView.route(user),
+                                          // );
+                                        },
+                                        child: CircleAvatar(
+                                          backgroundImage: NetworkImage(
+                                              postModel.resharedProfilePic),
+                                          radius: 24,
                                         ),
                                       ),
                                     ),
-                                    const Padding(
-                                      padding: EdgeInsets.only(left: 8.0),
-                                      child: Text(
-                                        '1st',
-                                        style: TextStyle(
-                                          color: Pallete.greyColor,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w300,
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Container(
+                                              margin: const EdgeInsets.only(
+                                                right: 1,
+                                              ),
+                                              child: Text(
+                                                postModel.resharedBy,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 18,
+                                                ),
+                                              ),
+                                            ),
+                                            const Padding(
+                                              padding:
+                                                  EdgeInsets.only(left: 8.0),
+                                              child: Text(
+                                                '1st',
+                                                style: TextStyle(
+                                                  color: Pallete.greyColor,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w300,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
+                                        if (user.bio.isNotEmpty)
+                                          Text(
+                                            user.bio,
+                                            style: const TextStyle(
+                                              color: Pallete.greyColor,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              timeago.format(
+                                                postModel.postedAt,
+                                                locale: 'en_short',
+                                              ),
+                                              style: const TextStyle(
+                                                color: Pallete.greyColor,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 4),
+                                            const Icon(
+                                              Icons.public,
+                                              color: Pallete.greyColor,
+                                              size: 14,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    const Spacer(),
+                                    IconButton(
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                            title: const Text('Delete Post'),
+                                            content: const Text(
+                                              'Are you sure you want to delete this post?',
+                                            ),
+                                            backgroundColor:
+                                                Pallete.backgroundColor,
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                  ref
+                                                      .watch(
+                                                          postControllerProvider
+                                                              .notifier)
+                                                      .deletePost(
+                                                          postModel, context);
+                                                },
+                                                child: const Text('Delete'),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                      icon: const Icon(
+                                        Icons.more_vert,
+                                        color: Pallete.greyColor,
                                       ),
                                     ),
                                   ],
                                 ),
-                                if (user.bio.isNotEmpty)
-                                  Text(
-                                    user.bio,
-                                    style: const TextStyle(
-                                      color: Pallete.greyColor,
-                                      fontSize: 15,
+                                Padding(
+                                  padding: const EdgeInsets.all(6.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color:
+                                            Pallete.greyColor.withOpacity(0.2),
+                                      ),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Container(
+                                              padding: const EdgeInsets.all(10),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  // Navigator.push(
+                                                  //   context,
+                                                  //   UserProfileView.route(user),
+                                                  // );
+                                                },
+                                                child: CircleAvatar(
+                                                  backgroundImage: NetworkImage(
+                                                      user.profilePic),
+                                                  radius: 22,
+                                                ),
+                                              ),
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Container(
+                                                      margin:
+                                                          const EdgeInsets.only(
+                                                        right: 1,
+                                                      ),
+                                                      child: Text(
+                                                        user.name,
+                                                        style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          fontSize: 18,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: 8.0),
+                                                      child: Text(
+                                                        '1st',
+                                                        style: TextStyle(
+                                                          color:
+                                                              Pallete.greyColor,
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.w300,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                if (user.bio.isNotEmpty)
+                                                  Text(
+                                                    user.bio,
+                                                    style: const TextStyle(
+                                                      color: Pallete.greyColor,
+                                                      fontSize: 15,
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 8.0),
+                                                    child: HashtagText(
+                                                        text: postModel.text),
+                                                  ),
+                                                  if (postModel.postType ==
+                                                      PostType.image)
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        Navigator.push(
+                                                          context,
+                                                          PostImageView.route(
+                                                            postModel,
+                                                            postModel
+                                                                .imageLinks,
+                                                          ),
+                                                        );
+                                                      },
+                                                      child: CarouselImage(
+                                                        imageLinks: postModel
+                                                            .imageLinks,
+                                                      ),
+                                                    ),
+                                                  if (postModel
+                                                      .link.isNotEmpty) ...[
+                                                    const SizedBox(height: 4),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 6.0),
+                                                      child: AnyLinkPreview(
+                                                        cache: const Duration(
+                                                            seconds: 8),
+                                                        displayDirection:
+                                                            UIDirection
+                                                                .uiDirectionHorizontal,
+                                                        link: postModel.link,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 4),
+                                      ],
                                     ),
                                   ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      timeago.format(
-                                        postModel.postedAt,
-                                        locale: 'en_short',
-                                      ),
-                                      style: const TextStyle(
-                                        color: Pallete.greyColor,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 4),
-                                    const Icon(
-                                      Icons.public,
-                                      color: Pallete.greyColor,
-                                      size: 14,
-                                    ),
-                                  ],
                                 ),
-                              ],
-                            ),
-                            const Spacer(),
-                            IconButton(
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: const Text('Delete Post'),
-                                    content: const Text(
-                                      'Are you sure you want to delete this post?',
-                                    ),
-                                    backgroundColor: Pallete.backgroundColor,
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
+                                const Divider(
+                                  color: Pallete.greyColor,
+                                  thickness: 0.2,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8.0,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      LikeButton(
+                                        size: 18,
+                                        isLiked:
+                                            postModel.likes.contains(cUser.uid),
+                                        likeBuilder: (bool isLiked) {
+                                          return Icon(
+                                            CupertinoIcons.hand_thumbsup,
+                                            color: isLiked
+                                                ? Pallete.redColor
+                                                : Pallete.greyColor,
+                                            size: 18,
+                                            semanticLabel: 'Like',
+                                          );
                                         },
-                                        child: const Text('Cancel'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
+                                        likeCount: postModel.likes.length,
+                                        countBuilder: (
+                                          int? count,
+                                          bool isLiked,
+                                          String text,
+                                        ) {
+                                          var color = isLiked
+                                              ? Pallete.redColor
+                                              : Pallete.greyColor;
+                                          Text(
+                                            text,
+                                            style: TextStyle(
+                                              color: color,
+                                              fontSize: 14,
+                                            ),
+                                          );
+                                          return null;
+                                        },
+                                        onTap: (bool isLiked) async {
                                           ref
                                               .watch(postControllerProvider
                                                   .notifier)
-                                              .deletePost(postModel, context);
+                                              .likePost(
+                                                postModel,
+                                                cUser,
+                                              );
+                                          return !isLiked;
                                         },
-                                        child: const Text('Delete'),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {},
+                                        icon: const Icon(
+                                          CupertinoIcons.chat_bubble_text,
+                                          color: Pallete.greyColor,
+                                          size: 18,
+                                          semanticLabel: 'Comment',
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          ref
+                                              .watch(postControllerProvider
+                                                  .notifier)
+                                              .resharePost(
+                                                postModel,
+                                                cUser,
+                                                context,
+                                              );
+                                        },
+                                        icon: const Icon(
+                                          FontAwesomeIcons.retweet,
+                                          color: Pallete.greyColor,
+                                          size: 18,
+                                          semanticLabel: 'Repost',
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {},
+                                        icon: const Icon(
+                                          CupertinoIcons.share_up,
+                                          color: Pallete.greyColor,
+                                          size: 18,
+                                          semanticLabel: 'Share',
+                                        ),
                                       ),
                                     ],
                                   ),
-                                );
-                              },
-                              icon: const Icon(
-                                Icons.more_vert,
-                                color: Pallete.greyColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(6.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                color: Pallete.greyColor.withOpacity(0.2),
-                              ),
-                            ),
-                            child: Column(
-                              children: [
+                                ),
+                              ],
+                              if (postModel.resharedBy.isEmpty) ...[
                                 Row(
                                   children: [
                                     Container(
-                                      padding: const EdgeInsets.all(10),
+                                      margin: const EdgeInsets.all(10),
                                       child: GestureDetector(
                                         onTap: () {
                                           // Navigator.push(
@@ -182,7 +411,7 @@ class PostCard extends ConsumerWidget {
                                         child: CircleAvatar(
                                           backgroundImage:
                                               NetworkImage(user.profilePic),
-                                          radius: 22,
+                                          radius: 24,
                                         ),
                                       ),
                                     ),
@@ -226,7 +455,67 @@ class PostCard extends ConsumerWidget {
                                               fontSize: 15,
                                             ),
                                           ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              timeago.format(
+                                                postModel.postedAt,
+                                                locale: 'en_short',
+                                              ),
+                                              style: const TextStyle(
+                                                color: Pallete.greyColor,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 4),
+                                            const Icon(
+                                              Icons.public,
+                                              color: Pallete.greyColor,
+                                              size: 14,
+                                            ),
+                                          ],
+                                        ),
                                       ],
+                                    ),
+                                    const Spacer(),
+                                    IconButton(
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                            title: const Text('Delete Post'),
+                                            content: const Text(
+                                              'Are you sure you want to delete this post?',
+                                            ),
+                                            backgroundColor:
+                                                Pallete.backgroundColor,
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                  ref
+                                                      .watch(
+                                                          postControllerProvider
+                                                              .notifier)
+                                                      .deletePost(
+                                                          postModel, context);
+                                                },
+                                                child: const Text('Delete'),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                      icon: const Icon(
+                                        Icons.more_vert,
+                                        color: Pallete.greyColor,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -275,372 +564,124 @@ class PostCard extends ConsumerWidget {
                                               ),
                                             ),
                                           ],
+                                          const Divider(
+                                            color: Pallete.greyColor,
+                                            thickness: 0.2,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 8.0,
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                LikeButton(
+                                                  size: 18,
+                                                  isLiked: postModel.likes
+                                                      .contains(cUser.uid),
+                                                  likeBuilder: (bool isLiked) {
+                                                    return Icon(
+                                                      CupertinoIcons
+                                                          .hand_thumbsup,
+                                                      color: isLiked
+                                                          ? Pallete.redColor
+                                                          : Pallete.greyColor,
+                                                      size: 18,
+                                                      semanticLabel: 'Like',
+                                                    );
+                                                  },
+                                                  likeCount:
+                                                      postModel.likes.length,
+                                                  countBuilder: (
+                                                    int? count,
+                                                    bool isLiked,
+                                                    String text,
+                                                  ) {
+                                                    var color = isLiked
+                                                        ? Pallete.redColor
+                                                        : Pallete.greyColor;
+                                                    Text(
+                                                      text,
+                                                      style: TextStyle(
+                                                        color: color,
+                                                        fontSize: 14,
+                                                      ),
+                                                    );
+                                                    return null;
+                                                  },
+                                                  onTap: (bool isLiked) async {
+                                                    ref
+                                                        .watch(
+                                                            postControllerProvider
+                                                                .notifier)
+                                                        .likePost(
+                                                          postModel,
+                                                          cUser,
+                                                        );
+                                                    return !isLiked;
+                                                  },
+                                                ),
+                                                IconButton(
+                                                  onPressed: () {},
+                                                  icon: const Icon(
+                                                    CupertinoIcons
+                                                        .chat_bubble_text,
+                                                    color: Pallete.greyColor,
+                                                    size: 18,
+                                                    semanticLabel: 'Comment',
+                                                  ),
+                                                ),
+                                                IconButton(
+                                                  onPressed: () {
+                                                    ref
+                                                        .watch(
+                                                            postControllerProvider
+                                                                .notifier)
+                                                        .resharePost(
+                                                          postModel,
+                                                          cUser,
+                                                          context,
+                                                        );
+                                                  },
+                                                  icon: const Icon(
+                                                    FontAwesomeIcons.retweet,
+                                                    color: Pallete.greyColor,
+                                                    size: 18,
+                                                    semanticLabel: 'Repost',
+                                                  ),
+                                                ),
+                                                IconButton(
+                                                  onPressed: () {},
+                                                  icon: const Icon(
+                                                    CupertinoIcons.share_up,
+                                                    color: Pallete.greyColor,
+                                                    size: 18,
+                                                    semanticLabel: 'Share',
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 4),
                               ],
-                            ),
-                          ),
-                        ),
-                        const Divider(
-                          color: Pallete.greyColor,
-                          thickness: 0.2,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 8.0,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              LikeButton(
-                                size: 18,
-                                isLiked:
-                                    postModel.likes.contains(currentUser.uid),
-                                likeBuilder: (bool isLiked) {
-                                  return Icon(
-                                    CupertinoIcons.hand_thumbsup,
-                                    color: isLiked
-                                        ? Pallete.redColor
-                                        : Pallete.greyColor,
-                                    size: 18,
-                                    semanticLabel: 'Like',
-                                  );
-                                },
-                                likeCount: postModel.likes.length,
-                                countBuilder: (
-                                  int? count,
-                                  bool isLiked,
-                                  String text,
-                                ) {
-                                  var color = isLiked
-                                      ? Pallete.redColor
-                                      : Pallete.greyColor;
-                                  Text(
-                                    text,
-                                    style: TextStyle(
-                                      color: color,
-                                      fontSize: 14,
-                                    ),
-                                  );
-                                  return null;
-                                },
-                                onTap: (bool isLiked) async {
-                                  ref
-                                      .watch(postControllerProvider.notifier)
-                                      .likePost(
-                                        postModel,
-                                        currentUser,
-                                      );
-                                  return !isLiked;
-                                },
-                              ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  CupertinoIcons.chat_bubble_text,
-                                  color: Pallete.greyColor,
-                                  size: 18,
-                                  semanticLabel: 'Comment',
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  ref
-                                      .watch(postControllerProvider.notifier)
-                                      .resharePost(
-                                        postModel,
-                                        currentUser,
-                                        context,
-                                      );
-                                },
-                                icon: const Icon(
-                                  FontAwesomeIcons.retweet,
-                                  color: Pallete.greyColor,
-                                  size: 18,
-                                  semanticLabel: 'Repost',
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(
-                                  CupertinoIcons.share_up,
-                                  color: Pallete.greyColor,
-                                  size: 18,
-                                  semanticLabel: 'Share',
-                                ),
-                              ),
+                              const Divider(
+                                  color: Pallete.greyColor, thickness: 0.2),
                             ],
                           ),
-                        ),
-                      ],
-                      if (postModel.resharedBy.isEmpty) ...[
-                        Row(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.all(10),
-                              child: GestureDetector(
-                                onTap: () {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   UserProfileView.route(user),
-                                  // );
-                                },
-                                child: CircleAvatar(
-                                  backgroundImage:
-                                      NetworkImage(user.profilePic),
-                                  radius: 24,
-                                ),
-                              ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                        right: 1,
-                                      ),
-                                      child: Text(
-                                        user.name,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    ),
-                                    const Padding(
-                                      padding: EdgeInsets.only(left: 8.0),
-                                      child: Text(
-                                        '1st',
-                                        style: TextStyle(
-                                          color: Pallete.greyColor,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w300,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                if (user.bio.isNotEmpty)
-                                  Text(
-                                    user.bio,
-                                    style: const TextStyle(
-                                      color: Pallete.greyColor,
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      timeago.format(
-                                        postModel.postedAt,
-                                        locale: 'en_short',
-                                      ),
-                                      style: const TextStyle(
-                                        color: Pallete.greyColor,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 4),
-                                    const Icon(
-                                      Icons.public,
-                                      color: Pallete.greyColor,
-                                      size: 14,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const Spacer(),
-                            IconButton(
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: const Text('Delete Post'),
-                                    content: const Text(
-                                      'Are you sure you want to delete this post?',
-                                    ),
-                                    backgroundColor: Pallete.backgroundColor,
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text('Cancel'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                          ref
-                                              .watch(postControllerProvider
-                                                  .notifier)
-                                              .deletePost(postModel, context);
-                                        },
-                                        child: const Text('Delete'),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                              icon: const Icon(
-                                Icons.more_vert,
-                                color: Pallete.greyColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: HashtagText(text: postModel.text),
-                                  ),
-                                  if (postModel.postType == PostType.image)
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          PostImageView.route(
-                                            postModel,
-                                            postModel.imageLinks,
-                                          ),
-                                        );
-                                      },
-                                      child: CarouselImage(
-                                        imageLinks: postModel.imageLinks,
-                                      ),
-                                    ),
-                                  if (postModel.link.isNotEmpty) ...[
-                                    const SizedBox(height: 4),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 6.0),
-                                      child: AnyLinkPreview(
-                                        cache: const Duration(seconds: 8),
-                                        displayDirection:
-                                            UIDirection.uiDirectionHorizontal,
-                                        link: postModel.link,
-                                      ),
-                                    ),
-                                  ],
-                                  const Divider(
-                                    color: Pallete.greyColor,
-                                    thickness: 0.2,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8.0,
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        LikeButton(
-                                          size: 18,
-                                          isLiked: postModel.likes
-                                              .contains(currentUser.uid),
-                                          likeBuilder: (bool isLiked) {
-                                            return Icon(
-                                              CupertinoIcons.hand_thumbsup,
-                                              color: isLiked
-                                                  ? Pallete.redColor
-                                                  : Pallete.greyColor,
-                                              size: 18,
-                                              semanticLabel: 'Like',
-                                            );
-                                          },
-                                          likeCount: postModel.likes.length,
-                                          countBuilder: (
-                                            int? count,
-                                            bool isLiked,
-                                            String text,
-                                          ) {
-                                            var color = isLiked
-                                                ? Pallete.redColor
-                                                : Pallete.greyColor;
-                                            Text(
-                                              text,
-                                              style: TextStyle(
-                                                color: color,
-                                                fontSize: 14,
-                                              ),
-                                            );
-                                            return null;
-                                          },
-                                          onTap: (bool isLiked) async {
-                                            ref
-                                                .watch(postControllerProvider
-                                                    .notifier)
-                                                .likePost(
-                                                  postModel,
-                                                  currentUser,
-                                                );
-                                            return !isLiked;
-                                          },
-                                        ),
-                                        IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            CupertinoIcons.chat_bubble_text,
-                                            color: Pallete.greyColor,
-                                            size: 18,
-                                            semanticLabel: 'Comment',
-                                          ),
-                                        ),
-                                        IconButton(
-                                          onPressed: () {
-                                            ref
-                                                .watch(postControllerProvider
-                                                    .notifier)
-                                                .resharePost(
-                                                  postModel,
-                                                  currentUser,
-                                                  context,
-                                                );
-                                          },
-                                          icon: const Icon(
-                                            FontAwesomeIcons.retweet,
-                                            color: Pallete.greyColor,
-                                            size: 18,
-                                            semanticLabel: 'Repost',
-                                          ),
-                                        ),
-                                        IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            CupertinoIcons.share_up,
-                                            color: Pallete.greyColor,
-                                            size: 18,
-                                            semanticLabel: 'Share',
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                      const Divider(color: Pallete.greyColor, thickness: 0.2),
-                    ],
-                  ),
-                );
-              },
-              error: (error, stackTrace) => ErrorText(error: error.toString()),
-              loading: () => const SizedBox.shrink(),
-            );
+                        );
+                      },
+                      error: (error, stackTrace) =>
+                          ErrorText(error: error.toString()),
+                      loading: () => const SizedBox.shrink(),
+                    );
+          },
+          error: (error, stackTrace) => ErrorText(error: error.toString()),
+          loading: () => const SizedBox.shrink(),
+        );
   }
 }

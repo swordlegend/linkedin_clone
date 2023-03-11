@@ -79,86 +79,93 @@ class _PostViewState extends ConsumerState<PostView> {
           ? const Loader()
           : currentUser.when(
               data: (data) {
-                return SafeArea(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(14.0),
-                              child: CircleAvatar(
-                                backgroundImage: NetworkImage(
-                                  data.profilePic,
-                                ),
-                                radius: 20,
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    data.name,
-                                    style: const TextStyle(
-                                      fontSize: 16,
+                return data == null
+                    ? const Center(
+                        child: LoadingPage(),
+                      )
+                    : SafeArea(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(14.0),
+                                    child: CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                        data.profilePic,
+                                      ),
+                                      radius: 20,
                                     ),
                                   ),
-                                ),
-                                const Text(
-                                  'Everyone',
-                                  style: TextStyle(
-                                    color: Pallete.whiteColor,
+                                  const SizedBox(width: 10),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(
+                                          data.name,
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ),
+                                      const Text(
+                                        'Everyone',
+                                        style: TextStyle(
+                                          color: Pallete.whiteColor,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                          child: TextField(
-                            controller: postTextController,
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                            decoration: const InputDecoration(
-                              hintText: "What do you want to talk about?",
-                              hintStyle: TextStyle(
-                                color: Pallete.greyColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
+                                ],
                               ),
-                              border: InputBorder.none,
-                            ),
-                            maxLines: 4,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0),
+                                child: TextField(
+                                  controller: postTextController,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                  decoration: const InputDecoration(
+                                    hintText: "What do you want to talk about?",
+                                    hintStyle: TextStyle(
+                                      color: Pallete.greyColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    border: InputBorder.none,
+                                  ),
+                                  maxLines: 4,
+                                ),
+                              ),
+                              const SizedBox(height: 15),
+                              if (images.isNotEmpty)
+                                CarouselSlider(
+                                  items: images.map(
+                                    (file) {
+                                      return Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        margin: const EdgeInsets.symmetric(
+                                          horizontal: 5,
+                                        ),
+                                        child: Image.file(file),
+                                      );
+                                    },
+                                  ).toList(),
+                                  options: CarouselOptions(
+                                    height: 400,
+                                    enableInfiniteScroll: false,
+                                  ),
+                                ),
+                            ],
                           ),
                         ),
-                        const SizedBox(height: 15),
-                        if (images.isNotEmpty)
-                          CarouselSlider(
-                            items: images.map(
-                              (file) {
-                                return Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  margin: const EdgeInsets.symmetric(
-                                    horizontal: 5,
-                                  ),
-                                  child: Image.file(file),
-                                );
-                              },
-                            ).toList(),
-                            options: CarouselOptions(
-                              height: 400,
-                              enableInfiniteScroll: false,
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                );
+                      );
               },
               loading: () => const LoadingPage(),
               error: (error, stack) => ErrorPage(error: error.toString()),

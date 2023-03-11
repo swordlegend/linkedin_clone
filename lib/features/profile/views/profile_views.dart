@@ -25,30 +25,36 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
       ),
       body: currentUser.when(
         data: (data) {
-          return Center(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      data.profilePic,
-                      // : 'https://en.wikipedia.org/wiki/Image#/media/File:Image_created_with_a_mobile_phone.png',
+          return data == null
+              ? const Center(
+                  child: Loader(),
+                )
+              : Center(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            data.profilePic,
+                            // : 'https://en.wikipedia.org/wiki/Image#/media/File:Image_created_with_a_mobile_phone.png',
+                          ),
+                        ),
+                        Text(data.name),
+                        Text(data.email),
+                        Text(data.uid),
+                        TextButton(
+                          onPressed: () {
+                            ref
+                                .read(authControllerProvider.notifier)
+                                .logout(context);
+                          },
+                          child: const Text('Sign Out'),
+                        )
+                      ],
                     ),
                   ),
-                  Text(data.name),
-                  Text(data.email),
-                  Text(data.uid),
-                  TextButton(
-                    onPressed: () {
-                      ref.read(authControllerProvider.notifier).logout(context);
-                    },
-                    child: const Text('Sign Out'),
-                  )
-                ],
-              ),
-            ),
-          );
+                );
         },
         error: (error, stack) => ErrorPage(error: error.toString()),
         loading: () => const LoadingPage(),
