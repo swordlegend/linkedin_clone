@@ -23,13 +23,12 @@ class UserApi implements IUserApi {
   UserApi({required Databases database}) : _database = database;
 
   @override
-  Future<model.Document> getUserData(String uid) async {
-    final data = await _database.getDocument(
+  Future<model.Document> getUserData(String uid) {
+    return _database.getDocument(
       databaseId: AppwriteConstants.databaseId,
       collectionId: AppwriteConstants.usersCollection,
       documentId: uid,
     );
-    return data;
   }
 
   @override

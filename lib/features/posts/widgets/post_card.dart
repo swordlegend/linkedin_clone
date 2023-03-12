@@ -11,6 +11,7 @@ import 'package:linkedin/features/posts/controllers/post_controllers.dart';
 import 'package:linkedin/features/posts/views/post_image_view.dart';
 import 'package:linkedin/features/posts/widgets/carousel_image.dart';
 import 'package:linkedin/features/posts/widgets/hashtag_text.dart';
+import 'package:linkedin/features/profile/views/profile_views.dart';
 import 'package:linkedin/models/post_model.dart';
 import 'package:linkedin/theme/theme.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -25,8 +26,8 @@ class PostCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ref.watch(currentUserDetailProvider).when(
-          data: (cUser) {
-            return cUser == null
+          data: (currentUser) {
+            return currentUser == null
                 ? const SizedBox.shrink()
                 : ref.watch(userDetailsProvider(postModel.uid)).when(
                       data: (user) {
@@ -46,14 +47,17 @@ class PostCard extends ConsumerWidget {
                                       margin: const EdgeInsets.all(10),
                                       child: GestureDetector(
                                         onTap: () {
-                                          // Navigator.push(
-                                          //   context,
-                                          //   UserProfileView.route(user),
-                                          // );
+                                          Navigator.push(
+                                            context,
+                                            ProfileView.route(
+                                              postModel.resharedByUid,
+                                            ),
+                                          );
                                         },
                                         child: CircleAvatar(
                                           backgroundImage: NetworkImage(
-                                              postModel.resharedProfilePic),
+                                            postModel.resharedProfilePic,
+                                          ),
                                           radius: 24,
                                         ),
                                       ),
@@ -144,10 +148,13 @@ class PostCard extends ConsumerWidget {
                                                   Navigator.pop(context);
                                                   ref
                                                       .watch(
-                                                          postControllerProvider
-                                                              .notifier)
+                                                        postControllerProvider
+                                                            .notifier,
+                                                      )
                                                       .deletePost(
-                                                          postModel, context);
+                                                        postModel,
+                                                        context,
+                                                      );
                                                 },
                                                 child: const Text('Delete'),
                                               ),
@@ -180,14 +187,15 @@ class PostCard extends ConsumerWidget {
                                               padding: const EdgeInsets.all(10),
                                               child: GestureDetector(
                                                 onTap: () {
-                                                  // Navigator.push(
-                                                  //   context,
-                                                  //   UserProfileView.route(user),
-                                                  // );
+                                                  Navigator.push(
+                                                    context,
+                                                    ProfileView.route(user.uid),
+                                                  );
                                                 },
                                                 child: CircleAvatar(
                                                   backgroundImage: NetworkImage(
-                                                      user.profilePic),
+                                                    user.profilePic,
+                                                  ),
                                                   radius: 22,
                                                 ),
                                               ),
@@ -214,7 +222,8 @@ class PostCard extends ConsumerWidget {
                                                     ),
                                                     const Padding(
                                                       padding: EdgeInsets.only(
-                                                          left: 8.0),
+                                                        left: 8.0,
+                                                      ),
                                                       child: Text(
                                                         '1st',
                                                         style: TextStyle(
@@ -252,9 +261,11 @@ class PostCard extends ConsumerWidget {
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            left: 8.0),
+                                                      left: 8.0,
+                                                    ),
                                                     child: HashtagText(
-                                                        text: postModel.text),
+                                                      text: postModel.text,
+                                                    ),
                                                   ),
                                                   if (postModel.postType ==
                                                       PostType.image)
@@ -315,8 +326,8 @@ class PostCard extends ConsumerWidget {
                                     children: [
                                       LikeButton(
                                         size: 18,
-                                        isLiked:
-                                            postModel.likes.contains(cUser.uid),
+                                        isLiked: postModel.likes
+                                            .contains(currentUser.uid),
                                         likeBuilder: (bool isLiked) {
                                           return Icon(
                                             CupertinoIcons.hand_thumbsup,
@@ -351,7 +362,7 @@ class PostCard extends ConsumerWidget {
                                                   .notifier)
                                               .likePost(
                                                 postModel,
-                                                cUser,
+                                                currentUser,
                                               );
                                           return !isLiked;
                                         },
@@ -368,11 +379,12 @@ class PostCard extends ConsumerWidget {
                                       IconButton(
                                         onPressed: () {
                                           ref
-                                              .watch(postControllerProvider
-                                                  .notifier)
+                                              .watch(
+                                                postControllerProvider.notifier,
+                                              )
                                               .resharePost(
                                                 postModel,
-                                                cUser,
+                                                currentUser,
                                                 context,
                                               );
                                         },
@@ -403,10 +415,10 @@ class PostCard extends ConsumerWidget {
                                       margin: const EdgeInsets.all(10),
                                       child: GestureDetector(
                                         onTap: () {
-                                          // Navigator.push(
-                                          //   context,
-                                          //   UserProfileView.route(user),
-                                          // );
+                                          Navigator.push(
+                                            context,
+                                            ProfileView.route(user.uid),
+                                          );
                                         },
                                         child: CircleAvatar(
                                           backgroundImage:
@@ -501,10 +513,13 @@ class PostCard extends ConsumerWidget {
                                                   Navigator.pop(context);
                                                   ref
                                                       .watch(
-                                                          postControllerProvider
-                                                              .notifier)
+                                                        postControllerProvider
+                                                            .notifier,
+                                                      )
                                                       .deletePost(
-                                                          postModel, context);
+                                                        postModel,
+                                                        context,
+                                                      );
                                                 },
                                                 child: const Text('Delete'),
                                               ),
@@ -529,9 +544,11 @@ class PostCard extends ConsumerWidget {
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.only(
-                                                left: 8.0),
+                                              left: 8.0,
+                                            ),
                                             child: HashtagText(
-                                                text: postModel.text),
+                                              text: postModel.text,
+                                            ),
                                           ),
                                           if (postModel.postType ==
                                               PostType.image)
@@ -578,8 +595,10 @@ class PostCard extends ConsumerWidget {
                                               children: [
                                                 LikeButton(
                                                   size: 18,
-                                                  isLiked: postModel.likes
-                                                      .contains(cUser.uid),
+                                                  isLiked:
+                                                      postModel.likes.contains(
+                                                    currentUser.uid,
+                                                  ),
                                                   likeBuilder: (bool isLiked) {
                                                     return Icon(
                                                       CupertinoIcons
@@ -613,11 +632,12 @@ class PostCard extends ConsumerWidget {
                                                   onTap: (bool isLiked) async {
                                                     ref
                                                         .watch(
-                                                            postControllerProvider
-                                                                .notifier)
+                                                          postControllerProvider
+                                                              .notifier,
+                                                        )
                                                         .likePost(
                                                           postModel,
-                                                          cUser,
+                                                          currentUser,
                                                         );
                                                     return !isLiked;
                                                   },
@@ -636,11 +656,12 @@ class PostCard extends ConsumerWidget {
                                                   onPressed: () {
                                                     ref
                                                         .watch(
-                                                            postControllerProvider
-                                                                .notifier)
+                                                          postControllerProvider
+                                                              .notifier,
+                                                        )
                                                         .resharePost(
                                                           postModel,
-                                                          cUser,
+                                                          currentUser,
                                                           context,
                                                         );
                                                   },
@@ -670,13 +691,16 @@ class PostCard extends ConsumerWidget {
                                 ),
                               ],
                               const Divider(
-                                  color: Pallete.greyColor, thickness: 0.2),
+                                color: Pallete.greyColor,
+                                thickness: 0.2,
+                              ),
                             ],
                           ),
                         );
                       },
-                      error: (error, stackTrace) =>
-                          ErrorText(error: error.toString()),
+                      error: (error, stackTrace) => ErrorText(
+                        error: error.toString(),
+                      ),
                       loading: () => const SizedBox.shrink(),
                     );
           },

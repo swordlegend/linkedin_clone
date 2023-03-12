@@ -99,7 +99,7 @@ class PostApi implements IPostApi {
         documentId: postModel.id,
         data: {
           'reshareCount': postModel.reshareCount,
-          'userProfilePic': postModel.userProfilePic,
+          // 'userProfilePic': postModel.userProfilePic,
         },
       );
       return right(document);
@@ -123,13 +123,12 @@ class PostApi implements IPostApi {
   }
 
   @override
-  Future<Document> getPostById(String id) async {
-    final post = await _db.getDocument(
+  Future<Document> getPostById(String id) {
+    return _db.getDocument(
       databaseId: AppwriteConstants.databaseId,
       collectionId: AppwriteConstants.postCollection,
       documentId: id,
     );
-    return post;
   }
 
   @override

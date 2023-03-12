@@ -80,9 +80,7 @@ class _PostViewState extends ConsumerState<PostView> {
           : currentUser.when(
               data: (data) {
                 return data == null
-                    ? const Center(
-                        child: LoadingPage(),
-                      )
+                    ? const Loader()
                     : SafeArea(
                         child: SingleChildScrollView(
                           child: Column(

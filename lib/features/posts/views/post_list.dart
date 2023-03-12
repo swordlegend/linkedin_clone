@@ -51,7 +51,7 @@ class PostList extends ConsumerWidget {
 
                     return ListView.builder(
                       itemCount: posts.length,
-                      itemBuilder: (BuildContext context, int index) {
+                      itemBuilder: (context, index) {
                         final post = posts[index];
                         return PostCard(postModel: post);
                       },
@@ -63,7 +63,7 @@ class PostList extends ConsumerWidget {
                   loading: () {
                     return ListView.builder(
                       itemCount: posts.length,
-                      itemBuilder: (BuildContext context, int index) {
+                      itemBuilder: (context, index) {
                         final post = posts[index];
                         return PostCard(postModel: post);
                       },

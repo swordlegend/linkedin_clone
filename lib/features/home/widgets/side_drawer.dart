@@ -31,7 +31,7 @@ class SideDrawer extends ConsumerWidget {
                           child: GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(
-                                ProfileView.route(),
+                                ProfileView.route(data.uid),
                               );
                             },
                             child: CircleAvatar(

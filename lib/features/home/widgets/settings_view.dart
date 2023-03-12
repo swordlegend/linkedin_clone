@@ -26,9 +26,7 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
       body: currentUser.when(
         data: (data) {
           return data == null
-              ? const Center(
-                  child: Loader(),
-                )
+              ? const Center(child: Loader())
               : Center(
                   child: SingleChildScrollView(
                     child: Column(

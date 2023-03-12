@@ -27,46 +27,12 @@ class _HomeViewState extends ConsumerState<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: GestureDetector(
-          onTap: () {},
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.65,
-            padding: const EdgeInsets.symmetric(vertical: 6),
-            decoration: BoxDecoration(
-              color: Pallete.searchBarColor,
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Row(
-              children: const [
-                SizedBox(
-                  width: 6,
-                ),
-                Icon(
-                  Icons.search,
-                  color: Pallete.whiteColor,
-                ),
-                SizedBox(
-                  width: 6,
-                ),
-                Text(
-                  'Search',
-                  style: TextStyle(
-                    color: Pallete.whiteColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.message_rounded),
-          ),
-        ],
+      appBar: UIConstants.appBar2(
+        context: context,
+        onSearchTap: () {},
+        icon: Icons.message_rounded,
+        onIconTap: () {},
+        title: 'Search',
       ),
       body: IndexedStack(
         index: page,

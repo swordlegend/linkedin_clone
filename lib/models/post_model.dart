@@ -10,6 +10,7 @@ class PostModel {
   final String uid;
   final String userProfilePic;
   final String resharedProfilePic;
+  final String resharedByUid;
   final PostType postType;
   final DateTime postedAt;
   final List<String> likes;
@@ -26,6 +27,7 @@ class PostModel {
     required this.uid,
     required this.userProfilePic,
     required this.resharedProfilePic,
+    required this.resharedByUid,
     required this.postType,
     required this.postedAt,
     required this.likes,
@@ -44,6 +46,7 @@ class PostModel {
     String? uid,
     String? userProfilePic,
     String? resharedProfilePic,
+    String? resharedByUid,
     PostType? postType,
     DateTime? postedAt,
     DateTime? resharedAt,
@@ -62,6 +65,7 @@ class PostModel {
       uid: uid ?? this.uid,
       userProfilePic: userProfilePic ?? this.userProfilePic,
       resharedProfilePic: resharedProfilePic ?? this.resharedProfilePic,
+      resharedByUid: resharedByUid ?? this.resharedByUid,
       postType: postType ?? this.postType,
       postedAt: postedAt ?? this.postedAt,
       likes: likes ?? this.likes,
@@ -83,6 +87,7 @@ class PostModel {
     result.addAll({'uid': uid});
     result.addAll({'userProfilePic': userProfilePic});
     result.addAll({'resharedProfilePic': resharedProfilePic});
+    result.addAll({'resharedByUid': resharedByUid});
     result.addAll({'postType': postType.type});
     result.addAll({'postedAt': postedAt.millisecondsSinceEpoch});
     result.addAll({'likes': likes});
@@ -103,6 +108,7 @@ class PostModel {
       uid: map['uid'] ?? '',
       userProfilePic: map['userProfilePic'] ?? '',
       resharedProfilePic: map['resharedProfilePic'] ?? '',
+      resharedByUid: map['resharedByUid'] ?? '',
       postType: (map['postType'] as String).toPostTypeEnum(),
       postedAt: DateTime.fromMillisecondsSinceEpoch(map['postedAt']),
       likes: List<String>.from(map['likes']),
@@ -116,7 +122,7 @@ class PostModel {
 
   @override
   String toString() {
-    return 'Tweet(text: $text, hashtags: $hashtags, link: $link, imageLinks: $imageLinks, uid: $uid, userProfilePic: $userProfilePic, resharedProfilePic: $resharedProfilePic, postType: $postType, postedAt: $postedAt, likes: $likes, commentIds: $commentIds, id: $id, reshareCount: $reshareCount, resharedBy: $resharedBy, repliedTo: $repliedTo)';
+    return 'Tweet(text: $text, hashtags: $hashtags, link: $link, imageLinks: $imageLinks, uid: $uid, userProfilePic: $userProfilePic, resharedProfilePic: $resharedProfilePic, resharedByUid: $resharedByUid, postType: $postType, postedAt: $postedAt, likes: $likes, commentIds: $commentIds, id: $id, reshareCount: $reshareCount, resharedBy: $resharedBy, repliedTo: $repliedTo)';
   }
 
   @override
@@ -131,6 +137,7 @@ class PostModel {
         other.uid == uid &&
         other.userProfilePic == userProfilePic &&
         other.resharedProfilePic == resharedProfilePic &&
+        other.resharedByUid == resharedByUid &&
         other.postType == postType &&
         other.postedAt == postedAt &&
         listEquals(other.likes, likes) &&
@@ -150,6 +157,7 @@ class PostModel {
         uid.hashCode ^
         userProfilePic.hashCode ^
         resharedProfilePic.hashCode ^
+        resharedByUid.hashCode ^
         postType.hashCode ^
         postedAt.hashCode ^
         likes.hashCode ^

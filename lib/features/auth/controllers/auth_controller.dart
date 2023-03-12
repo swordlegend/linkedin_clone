@@ -16,7 +16,8 @@ final authControllerProvider =
 });
 
 final currentUserProvider = FutureProvider.autoDispose((ref) {
-  return ref.watch(authControllerProvider.notifier).getCurrentUser();
+  final authController = ref.watch(authControllerProvider.notifier);
+  return authController.getCurrentUser();
 });
 
 final currentUserDetailProvider = FutureProvider.autoDispose((ref) {
@@ -40,7 +41,7 @@ class AuthController extends StateNotifier<bool> {
         _userApi = userApi,
         super(false);
 
-  Future<void> signIn({
+  void signIn({
     required String email,
     required String password,
     required BuildContext context,
@@ -57,7 +58,7 @@ class AuthController extends StateNotifier<bool> {
     state = false;
   }
 
-  Future<void> signUp({
+  void signUp({
     required String email,
     required String password,
     required BuildContext context,
@@ -95,7 +96,7 @@ class AuthController extends StateNotifier<bool> {
     return updatedUser;
   }
 
-  Future<void> googleSignIn(BuildContext context) async {
+  void googleSignIn(BuildContext context) async {
     state = true;
     final result = await _authApi.googleSignIn();
     result.fold((l) => showSnackBar(context, l.message), (r) {
@@ -107,7 +108,7 @@ class AuthController extends StateNotifier<bool> {
     state = false;
   }
 
-  Future<void> logout(BuildContext context) async {
+  void logout(BuildContext context) async {
     state = true;
     final res = await _authApi.logout();
     res.fold((l) => null, (r) {

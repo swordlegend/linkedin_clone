@@ -101,6 +101,7 @@ class PostController extends StateNotifier<bool> {
     postModel = postModel.copyWith(
       resharedBy: currentUser.name,
       resharedProfilePic: currentUser.profilePic,
+      resharedByUid: currentUser.uid,
       likes: [],
       commentIds: [],
       reshareCount: postModel.reshareCount + 1,
@@ -187,6 +188,7 @@ class PostController extends StateNotifier<bool> {
       uid: user.uid,
       userProfilePic: user.profilePic,
       resharedProfilePic: '',
+      resharedByUid: '',
       postType: PostType.image,
       postedAt: DateTime.now(),
       likes: const [],
@@ -222,6 +224,7 @@ class PostController extends StateNotifier<bool> {
       uid: user.uid,
       userProfilePic: user.profilePic,
       resharedProfilePic: '',
+      resharedByUid: '',
       postType: PostType.text,
       postedAt: DateTime.now(),
       likes: const [],
