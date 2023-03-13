@@ -64,13 +64,13 @@ class PostController extends StateNotifier<bool> {
 
   Future<List<PostModel>> getPosts() async {
     final posts = await _postAPI.getPosts();
-    Future.delayed(const Duration(seconds: 1));
+    // Future.delayed(const Duration(seconds: 1));
     return posts.map((posts) => PostModel.fromMap(posts.data)).toList();
   }
 
   Future<PostModel> getPostById(String id) async {
     final post = await _postAPI.getPostById(id);
-    Future.delayed(const Duration(seconds: 1));
+    // Future.delayed(const Duration(seconds: 1));
     return PostModel.fromMap(post.data);
   }
 
@@ -184,13 +184,13 @@ class PostController extends StateNotifier<bool> {
 
   Future<List<PostModel>> getRepliesToPost(PostModel postModel) async {
     final documents = await _postAPI.getRepliesToPost(postModel);
-    Future.delayed(const Duration(seconds: 1));
+    // Future.delayed(const Duration(seconds: 1));
     return documents.map((post) => PostModel.fromMap(post.data)).toList();
   }
 
   Future<List<PostModel>> getPostsByHashtag(String hashtag) async {
     final documents = await _postAPI.getPostsByHashtag(hashtag);
-    Future.delayed(const Duration(seconds: 1));
+    // Future.delayed(const Duration(seconds: 1));
     return documents.map((post) => PostModel.fromMap(post.data)).toList();
   }
 

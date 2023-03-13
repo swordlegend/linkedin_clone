@@ -26,23 +26,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'LinkedIn',
-        theme: AppTheme.theme,
-        home: Consumer(
-          builder: (context, ref, child) {
-            return ref.watch(currentUserProvider).when(
-                  data: (user) {
-                    if (user == null) {
-                      return const SignInView();
-                    }
+      title: 'LinkedIn',
+      theme: AppTheme.theme,
+      home: Consumer(
+        builder: (context, ref, child) {
+          return ref.watch(currentUserProvider).when(
+                data: (user) {
+                  if (user != null) {
                     return const HomeView();
-                  },
-                  loading: () => const Center(
-                    child: LoadingPage(),
-                  ),
-                  error: (error, stack) => ErrorPage(error: error.toString()),
-                );
-          },
-        ));
+                  }
+                  return const SignInView();
+                },
+                loading: () => const LoadingPage(),
+                error: (error, stack) => ErrorPage(error: error.toString()),
+              );
+        },
+      ),
+    );
   }
 }

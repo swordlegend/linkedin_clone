@@ -30,46 +30,46 @@ class UIConstants {
     required String title,
   }) {
     return AppBar(
-        title: GestureDetector(
-          onTap: () {},
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.65,
-            padding: const EdgeInsets.symmetric(vertical: 6),
-            decoration: BoxDecoration(
-              color: Pallete.searchBarColor,
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Row(
-              children: [
-                const SizedBox(
-                  width: 6,
-                ),
-                const Icon(
-                  Icons.search,
+      title: GestureDetector(
+        onTap: () {},
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.70,
+          padding: const EdgeInsets.symmetric(vertical: 6),
+          decoration: BoxDecoration(
+            color: Pallete.searchBarColor,
+            borderRadius: BorderRadius.circular(6),
+          ),
+          child: Row(
+            children: [
+              const SizedBox(
+                width: 6,
+              ),
+              const Icon(
+                Icons.search,
+                color: Pallete.whiteColor,
+              ),
+              const SizedBox(
+                width: 6,
+              ),
+              Text(
+                title,
+                style: const TextStyle(
                   color: Pallete.whiteColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
                 ),
-                const SizedBox(
-                  width: 6,
-                ),
-                Text(
-                  title,
-                  style: const TextStyle(
-                    color: Pallete.whiteColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(icon),
-          ),
-        ],
-      );
+      ),
+      actions: [
+        IconButton(
+          onPressed: () {},
+          icon: Icon(icon),
+        ),
+      ],
+    );
   }
 
   static const List<Widget> bottomTabBarPages = [
