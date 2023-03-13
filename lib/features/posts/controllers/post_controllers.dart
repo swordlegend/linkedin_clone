@@ -6,8 +6,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linkedin/apis/post_api.dart';
 import 'package:linkedin/apis/storage_api.dart';
 import 'package:linkedin/core/core.dart';
+import 'package:linkedin/core/enums/notification_type_enum.dart';
 import 'package:linkedin/core/enums/post_type_enum.dart';
 import 'package:linkedin/features/auth/controllers/auth_controller.dart';
+import 'package:linkedin/features/notification/controller/notification_controller.dart';
 import 'package:linkedin/models/post_model.dart';
 import 'package:linkedin/models/user_model.dart';
 
@@ -17,6 +19,7 @@ final postControllerProvider = StateNotifierProvider<PostController, bool>(
       ref: ref,
       postAPI: ref.watch(postApiProvider),
       storageAPI: ref.watch(storageAPIProvider),
+      notificationController: ref.watch(notificationControllerProvider.notifier),
     );
   },
 );
@@ -46,25 +49,28 @@ final getPostByHashtagProvider =
 class PostController extends StateNotifier<bool> {
   final PostApi _postAPI;
   final StorageAPI _storageAPI;
+  final NotificationController _notificationController;
   final Ref _ref;
   PostController({
     required Ref ref,
     required PostApi postAPI,
     required StorageAPI storageAPI,
+    required NotificationController notificationController,
   })  : _ref = ref,
         _postAPI = postAPI,
         _storageAPI = storageAPI,
+        _notificationController = notificationController,
         super(false);
 
   Future<List<PostModel>> getPosts() async {
-    Future.delayed(const Duration(seconds: 2));
     final posts = await _postAPI.getPosts();
+    Future.delayed(const Duration(seconds: 1));
     return posts.map((posts) => PostModel.fromMap(posts.data)).toList();
   }
 
   Future<PostModel> getPostById(String id) async {
-    Future.delayed(const Duration(seconds: 2));
     final post = await _postAPI.getPostById(id);
+    Future.delayed(const Duration(seconds: 1));
     return PostModel.fromMap(post.data);
   }
 
@@ -79,7 +85,15 @@ class PostController extends StateNotifier<bool> {
 
     postModel = postModel.copyWith(likes: likes);
     final res = await _postAPI.likePost(postModel);
-    res.fold((l) => null, (r) => null);
+    // res.fold((l) => null, (r) => null);
+    res.fold((l) => null, (r) {
+      _notificationController.createNotification(
+        text: '${user.name} liked your post!',
+        postId: postModel.id,
+        notificationType: NotificationType.like,
+        uid: postModel.uid,
+      );
+    });
   }
 
   void deletePost(
@@ -117,9 +131,21 @@ class PostController extends StateNotifier<bool> {
           postedAt: DateTime.now(),
         );
         final res2 = await _postAPI.sharePost(postModel);
+        // res2.fold(
+        //   (l) => showSnackBar(context, l.message),
+        //   (r) => showSnackBar(context, 'Reshared!'),
+        // );
         res2.fold(
           (l) => showSnackBar(context, l.message),
-          (r) => showSnackBar(context, 'Reshared!'),
+          (r) {
+            _notificationController.createNotification(
+              text: '${currentUser.name} reshared your post!',
+              postId: postModel.id,
+              notificationType: NotificationType.reshare,
+              uid: postModel.uid,
+            );
+            showSnackBar(context, 'Reshared!');
+          },
         );
       },
     );
@@ -157,14 +183,14 @@ class PostController extends StateNotifier<bool> {
   }
 
   Future<List<PostModel>> getRepliesToPost(PostModel postModel) async {
-    Future.delayed(const Duration(seconds: 2));
     final documents = await _postAPI.getRepliesToPost(postModel);
+    Future.delayed(const Duration(seconds: 1));
     return documents.map((post) => PostModel.fromMap(post.data)).toList();
   }
 
   Future<List<PostModel>> getPostsByHashtag(String hashtag) async {
-    Future.delayed(const Duration(seconds: 2));
     final documents = await _postAPI.getPostsByHashtag(hashtag);
+    Future.delayed(const Duration(seconds: 1));
     return documents.map((post) => PostModel.fromMap(post.data)).toList();
   }
 
@@ -180,6 +206,7 @@ class PostController extends StateNotifier<bool> {
     String link = _getLinkFromText(text);
     final user = _ref.read(currentUserDetailProvider).value!;
     final imageLinks = await _storageAPI.uploadImage(images);
+    Future.delayed(const Duration(seconds: 3));
     PostModel postModel = PostModel(
       text: text,
       hashtags: hashtags,

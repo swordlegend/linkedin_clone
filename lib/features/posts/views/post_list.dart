@@ -54,6 +54,12 @@ class PostList extends ConsumerWidget {
                       itemBuilder: (context, index) {
                         final post = posts[index];
                         return PostCard(postModel: post);
+                        // return Card(
+                        //   child: ListTile(
+                        //     title: Text(post.text),
+                        //     subtitle: Text(post.uid),
+                        //   ),
+                        // );
                       },
                     );
                   },
@@ -66,6 +72,12 @@ class PostList extends ConsumerWidget {
                       itemBuilder: (context, index) {
                         final post = posts[index];
                         return PostCard(postModel: post);
+                        // return Card(
+                        //   child: ListTile(
+                        //     title: Text(post.text),
+                        //     subtitle: Text(post.uid),
+                        //   ),
+                        // );
                       },
                     );
                   },

@@ -7,6 +7,7 @@ class AppwriteConstants {
 
   static const String usersCollection = '640993094ddf196ac2a0';
   static const String postCollection = '6409931ce47c1289ba8e';
+  static const String notificationsCollection = '640f4c9fda16b3a96192';
 
   static const String imageBucket = '64099366f01915e2f5cd';
   static String imageUrl(String imageId) =>
