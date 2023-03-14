@@ -91,7 +91,7 @@ class AuthController extends StateNotifier<bool> {
   Future getCurrentUser() => _authApi.getCurrentUser();
 
   Future<UserModel> getUserData(String uid) async {
-    Future.delayed(const Duration(seconds: 2));
+    // Future.delayed(const Duration(seconds: 2));
     final document = await _userApi.getUserData(uid);
     final updatedUser = UserModel.fromMap(document.data);
     return updatedUser;

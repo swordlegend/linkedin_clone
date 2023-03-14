@@ -13,19 +13,15 @@ class CreateJobView extends ConsumerStatefulWidget {
 }
 
 class _CreateJobViewState extends ConsumerState<CreateJobView> {
-  TextEditingController position = TextEditingController();
   TextEditingController companyName = TextEditingController();
   TextEditingController jobDescription = TextEditingController();
   TextEditingController jobLocation = TextEditingController();
-  TextEditingController jobType = TextEditingController();
 
   void postJob() {
     ref.read(jobsControllerProvider.notifier).createJobPost(
-          position: position.text,
           company: companyName.text,
           jobDescription: jobDescription.text,
           jobLocation: jobLocation.text,
-          jobType: jobType.text,
           context: context,
         );
     Navigator.pop(context);
@@ -48,21 +44,10 @@ class _CreateJobViewState extends ConsumerState<CreateJobView> {
               return AlertDialog(
                 backgroundColor: Pallete.backgroundColor,
                 content: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.6,
+                  height: MediaQuery.of(context).size.height * 0.4,
                   child: Column(
                     children: [
                       const Text('Create Job Post'),
-                      const SizedBox(height: 10),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 6),
-                        child: TextField(
-                          decoration: const InputDecoration(
-                            hintText: 'Position',
-                            border: OutlineInputBorder(),
-                          ),
-                          controller: position,
-                        ),
-                      ),
                       const SizedBox(height: 10),
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 6),
@@ -97,27 +82,14 @@ class _CreateJobViewState extends ConsumerState<CreateJobView> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 6),
-                        child: TextField(
-                          decoration: const InputDecoration(
-                            hintText: 'Job Type',
-                            border: OutlineInputBorder(),
-                          ),
-                          controller: jobType,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           TextButton(
                             onPressed: () {
-                              position.clear();
                               companyName.clear();
                               jobDescription.clear();
                               jobLocation.clear();
-                              jobType.clear();
                               Navigator.pop(context);
                             },
                             child: const Text('Cancel'),

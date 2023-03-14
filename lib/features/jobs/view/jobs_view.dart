@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linkedin/common/common.dart';
 import 'package:linkedin/features/jobs/controllers/jobs_controller.dart';
+import 'package:linkedin/features/jobs/widgets/job_card.dart';
 
 class JobsView extends ConsumerWidget {
   static route() => MaterialPageRoute(
@@ -17,13 +18,7 @@ class JobsView extends ConsumerWidget {
               itemCount: jobs.length,
               itemBuilder: (context, index) {
                 final job = jobs[index];
-                return Card(
-                  child: ListTile(
-                    title: Text(job.jobDescription),
-                    subtitle: Text(job.company),
-                    trailing: Text(job.jobType),
-                  ),
-                );
+                return JobCard(jobModel: job);
               },
             );
           },

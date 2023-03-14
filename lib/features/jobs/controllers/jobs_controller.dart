@@ -4,6 +4,7 @@ import 'package:linkedin/apis/job_api.dart';
 import 'package:linkedin/core/core.dart';
 import 'package:linkedin/features/auth/controllers/auth_controller.dart';
 import 'package:linkedin/models/jobs_model.dart';
+import 'package:linkedin/models/user_model.dart';
 
 final jobsControllerProvider = StateNotifierProvider<JobsController, bool>(
   (ref) {
@@ -33,12 +34,32 @@ class JobsController extends StateNotifier<bool> {
     return posts.map((posts) => JobModel.fromMap(posts.data)).toList();
   }
 
+  void bookmark(
+    JobModel jobModel,
+    BuildContext context,
+    UserModel currentUser,
+  ) async {
+    bool isBookmarked = jobModel.isBookmarked;
+
+    if (jobModel.isBookmarked == true) {
+      isBookmarked = false;
+    } else {
+      isBookmarked = true;
+    }
+    jobModel.copyWith(isBookmarked: isBookmarked);
+    state = true;
+    final res = await _jobApi.bookmarkJob(jobModel);
+    res.fold(
+      (l) => showSnackBar(context, l.message),
+      (r) => showSnackBar(context, 'job bookmarked'),
+    );
+    state = false;
+  }
+
   void createJobPost({
     required String jobDescription,
     required String company,
-    required String position,
     required String jobLocation,
-    required String jobType,
     required BuildContext context,
   }) async {
     if (jobDescription.isEmpty) {
@@ -57,9 +78,10 @@ class JobsController extends StateNotifier<bool> {
       postedAt: DateTime.now(),
       id: '',
       company: company,
-      position: position,
+      companyLogo:
+          'https://raw.githubusercontent.com/imobasshir/portfolio/main/images/preview.jpg',
       jobLocation: jobLocation,
-      jobType: jobType,
+      isBookmarked: false,
     );
     final res = await _jobApi.postJob(jobModel);
     res.fold(

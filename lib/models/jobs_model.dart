@@ -9,9 +9,9 @@ class JobModel {
   final DateTime postedAt;
   final String id;
   final String company;
-  final String position;
+  final String companyLogo;
   final String jobLocation;
-  final String jobType;
+  final bool isBookmarked;
   const JobModel({
     required this.jobDescription,
     required this.link,
@@ -20,9 +20,9 @@ class JobModel {
     required this.postedAt,
     required this.id,
     required this.company,
-    required this.position,
+    required this.companyLogo,
     required this.jobLocation,
-    required this.jobType,
+    required this.isBookmarked,
   });
 
   JobModel copyWith({
@@ -33,9 +33,9 @@ class JobModel {
     DateTime? postedAt,
     String? id,
     String? company,
-    String? position,
+    String? companyLogo,
     String? jobLocation,
-    String? jobType,
+    bool? isBookmarked,
   }) {
     return JobModel(
       jobDescription: jobDescription ?? this.jobDescription,
@@ -45,9 +45,9 @@ class JobModel {
       postedAt: postedAt ?? this.postedAt,
       id: id ?? this.id,
       company: company ?? this.company,
-      position: position ?? this.position,
+      companyLogo: companyLogo ?? this.companyLogo,
       jobLocation: jobLocation ?? this.jobLocation,
-      jobType: jobType ?? this.jobType,
+      isBookmarked: isBookmarked ?? this.isBookmarked,
     );
   }
 
@@ -60,9 +60,9 @@ class JobModel {
     result.addAll({'userProfilePic': userProfilePic});
     result.addAll({'postedAt': postedAt.millisecondsSinceEpoch});
     result.addAll({'company': company});
-    result.addAll({'position': position});
+    result.addAll({'companyLogo': companyLogo});
     result.addAll({'jobLocation': jobLocation});
-    result.addAll({'jobType': jobType});
+    result.addAll({'isBookmarked': isBookmarked});
 
     return result;
   }
@@ -76,15 +76,15 @@ class JobModel {
       postedAt: DateTime.fromMillisecondsSinceEpoch(map['postedAt']),
       id: map['\$id'] ?? '',
       company: map['company'] ?? '',
-      position: map['position'] ?? '',
+      companyLogo: map['companyLogo'] ?? '',
       jobLocation: map['jobLocation'] ?? '',
-      jobType: map['jobType'] ?? '',
+      isBookmarked: map['isBookmarked'] ?? false,
     );
   }
 
   @override
   String toString() {
-    return 'Tweet(jobDescription: $jobDescription, link: $link, uid: $uid, userProfilePic: $userProfilePic, postedAt: $postedAt, id: $id, company: $company, position: $position, jobLocation: $jobLocation, jobType: $jobType)';
+    return 'Tweet(jobDescription: $jobDescription, link: $link, uid: $uid, userProfilePic: $userProfilePic, postedAt: $postedAt, id: $id, company: $company, companyLogo: $companyLogo, jobLocation: $jobLocation, isBookmarked: $isBookmarked)';
   }
 
   @override
@@ -99,9 +99,9 @@ class JobModel {
         other.postedAt == postedAt &&
         other.id == id &&
         other.company == company &&
-        other.position == position &&
+        other.companyLogo == companyLogo &&
         other.jobLocation == jobLocation &&
-        other.jobType == jobType;
+        other.isBookmarked == isBookmarked;
   }
 
   @override
@@ -113,8 +113,8 @@ class JobModel {
         postedAt.hashCode ^
         id.hashCode ^
         company.hashCode ^
-        position.hashCode ^
+        companyLogo.hashCode ^
         jobLocation.hashCode ^
-        jobType.hashCode;
+        isBookmarked.hashCode;
   }
 }

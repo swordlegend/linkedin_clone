@@ -16,6 +16,7 @@ abstract class IJobApi {
   FutureEither<Document> postJob(JobModel jobModel);
   Future<List<Document>> getJobsPosts();
   FutureEitherVoid deletePost(JobModel jobModel);
+  FutureEitherVoid bookmarkJob(JobModel jobModel);
 }
 
 class JobApi implements IJobApi {
@@ -50,6 +51,8 @@ class JobApi implements IJobApi {
     return documents.documents;
   }
 
+
+
   @override
   FutureEitherVoid deletePost(JobModel jobModel) async {
     try {
@@ -57,6 +60,25 @@ class JobApi implements IJobApi {
         databaseId: AppwriteConstants.databaseId,
         collectionId: AppwriteConstants.jobsCollection,
         documentId: jobModel.id,
+      );
+      return right(null);
+    } on AppwriteException catch (e, st) {
+      return left(Failure(e.message ?? 'Some unexpected error occurred', st));
+    } catch (e, st) {
+      return left(Failure(e.toString(), st));
+    }
+  }
+  
+  @override
+  FutureEitherVoid bookmarkJob(JobModel jobModel) async {
+  try {
+      await _db.updateDocument(
+        databaseId: AppwriteConstants.databaseId,
+        collectionId: AppwriteConstants.jobsCollection,
+        documentId: jobModel.id,
+        data: {
+          'isBookmarked': jobModel.isBookmarked,
+        }
       );
       return right(null);
     } on AppwriteException catch (e, st) {
