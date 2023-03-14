@@ -31,7 +31,7 @@ class UIConstants {
   }) {
     return AppBar(
       title: GestureDetector(
-        onTap: () {},
+        onTap: onSearchTap,
         child: Container(
           width: MediaQuery.of(context).size.width * 0.70,
           padding: const EdgeInsets.symmetric(vertical: 6),
@@ -65,7 +65,7 @@ class UIConstants {
       ),
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: onIconTap,
           icon: Icon(icon),
         ),
       ],

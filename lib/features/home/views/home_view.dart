@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linkedin/constants/constants.dart';
 import 'package:linkedin/features/home/widgets/side_drawer.dart';
+import 'package:linkedin/features/search/views/search_view.dart';
 import 'package:linkedin/theme/pallete.dart';
 
 class HomeView extends ConsumerStatefulWidget {
@@ -29,7 +30,12 @@ class _HomeViewState extends ConsumerState<HomeView> {
     return Scaffold(
       appBar: UIConstants.appBar2(
         context: context,
-        onSearchTap: () {},
+        onSearchTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const SearchView()),
+          );
+        },
         icon: Icons.message_rounded,
         onIconTap: () {},
         title: 'Search',
