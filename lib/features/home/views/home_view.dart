@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linkedin/constants/constants.dart';
 import 'package:linkedin/features/home/widgets/side_drawer.dart';
+import 'package:linkedin/features/jobs/widgets/create_job_view.dart';
 import 'package:linkedin/features/search/views/search_view.dart';
 import 'package:linkedin/theme/pallete.dart';
 
@@ -53,7 +54,18 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 size: 28,
               ),
             )
-          : null,
+          : page == 4
+              ? FloatingActionButton(
+                  onPressed: () {
+                    showDialog(context: context, builder: (context) => const CreateJobView());
+                  },
+                  child: const Icon(
+                    Icons.add,
+                    color: Pallete.whiteColor,
+                    size: 28,
+                  ),
+                )
+              : null,
       drawer: const SideDrawer(),
       bottomNavigationBar: CupertinoTabBar(
         backgroundColor: Pallete.lightBackgroundColor,

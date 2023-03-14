@@ -1,6 +1,7 @@
 enum PostType {
   text('text'),
-  image('image');
+  image('image'),
+  jobs('jobs');
 
   final String type;
   const PostType(this.type);
@@ -13,6 +14,8 @@ extension ConvertTweet on String {
         return PostType.text;
       case 'image':
         return PostType.image;
+      case 'jobs':
+        return PostType.jobs;
       default:
         return PostType.text;
     }

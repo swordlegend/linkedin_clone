@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkedin/constants/constants.dart';
+import 'package:linkedin/features/jobs/view/jobs_view.dart';
 import 'package:linkedin/features/notification/view/notification_view.dart';
 import 'package:linkedin/features/posts/views/post_view.dart';
 import 'package:linkedin/features/posts/views/post_list.dart';
@@ -82,7 +83,7 @@ class UIConstants {
     PostView(),
     // Center(child: Text('Notifications')),
     NotificationView(),
-    Center(child: Text('Jobs')),
-    // JobsView(),
+    // Center(child: Text('Jobs')),
+    JobsView(),
   ];
 }

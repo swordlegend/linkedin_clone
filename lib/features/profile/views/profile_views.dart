@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linkedin/common/common.dart';
 import 'package:linkedin/constants/constants.dart';
 import 'package:linkedin/features/auth/controllers/auth_controller.dart';
+import 'package:linkedin/features/search/views/search_view.dart';
 
 class ProfileView extends ConsumerStatefulWidget {
   static route(String uid) => MaterialPageRoute(
@@ -35,7 +36,14 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
                   Scaffold(
                 appBar: UIConstants.appBar2(
                   context: context,
-                  onSearchTap: () {},
+                  onSearchTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SearchView(),
+                      ),
+                    );
+                  },
                   icon: Icons.settings,
                   onIconTap: () {},
                   title: data.name,
