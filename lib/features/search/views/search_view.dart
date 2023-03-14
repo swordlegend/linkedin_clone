@@ -27,7 +27,7 @@ class _SearchViewState extends ConsumerState<SearchView> {
     final appBarTextFieldBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(6),
       borderSide: const BorderSide(
-        color: Pallete.searchBarColor,
+        color: Pallete.backgroundColor,
       ),
     );
     return Scaffold(
@@ -45,12 +45,14 @@ class _SearchViewState extends ConsumerState<SearchView> {
               contentPadding: const EdgeInsets.all(10).copyWith(
                 left: 20,
               ),
-              fillColor: Pallete.searchBarColor,
+              fillColor: Pallete.backgroundColor,
               filled: true,
               enabledBorder: appBarTextFieldBorder,
               focusedBorder: appBarTextFieldBorder,
               hintText: 'Search',
               hintStyle: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w300,
                 color: Pallete.whiteColor,
               ),
             ),

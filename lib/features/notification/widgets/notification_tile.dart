@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linkedin/common/common.dart';
 import 'package:linkedin/features/auth/controllers/auth_controller.dart';
+import 'package:linkedin/features/profile/views/profile_views.dart';
 import 'package:linkedin/models/notification_model.dart' as model;
 import 'package:linkedin/theme/pallete.dart';
 
@@ -20,7 +21,16 @@ class NotificationTile extends ConsumerWidget {
       leading: activityUser.when(
         data: (data) {
           return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProfileView(
+                    uid: data.uid,
+                  ),
+                ),
+              );
+            },
             child: CircleAvatar(
               backgroundImage: NetworkImage(data.profilePic),
               radius: 22,
@@ -32,9 +42,12 @@ class NotificationTile extends ConsumerWidget {
         ),
         loading: () => const Loader(),
       ),
-      trailing: const Icon(
-        Icons.more_vert,
-        color: Pallete.greyColor,
+      trailing: IconButton(
+        onPressed: () {},
+        icon: const Icon(
+          Icons.more_vert,
+          color: Pallete.greyColor,
+        ),
       ),
       title: Text(notification.text),
     );

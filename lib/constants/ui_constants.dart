@@ -56,7 +56,7 @@ class UIConstants {
                 style: const TextStyle(
                   color: Pallete.whiteColor,
                   fontSize: 16,
-                  fontWeight: FontWeight.w400,
+                  fontWeight: FontWeight.w300,
                 ),
               ),
             ],
