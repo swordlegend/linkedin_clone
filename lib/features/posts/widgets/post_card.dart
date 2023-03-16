@@ -87,7 +87,8 @@ class PostCard extends ConsumerWidget {
                                                   ),
                                                   const Padding(
                                                     padding: EdgeInsets.only(
-                                                        left: 8.0),
+                                                      left: 8.0,
+                                                    ),
                                                     child: Text(
                                                       '1st',
                                                       style: TextStyle(
@@ -134,44 +135,54 @@ class PostCard extends ConsumerWidget {
                                           const Spacer(),
                                           IconButton(
                                             onPressed: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) =>
-                                                    AlertDialog(
-                                                  title:
-                                                      const Text('Delete Post'),
-                                                  content: const Text(
-                                                    'Are you sure you want to delete this post?',
+                                              if (postModel.resharedByUid ==
+                                                  currentUser.uid) {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      AlertDialog(
+                                                    title: const Text(
+                                                      'Delete Post',
+                                                    ),
+                                                    content: const Text(
+                                                      'Are you sure you want to delete this post?',
+                                                    ),
+                                                    backgroundColor:
+                                                        Pallete.backgroundColor,
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                            context,
+                                                          );
+                                                        },
+                                                        child: const Text(
+                                                          'Cancel',
+                                                        ),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                            context,
+                                                          );
+                                                          ref
+                                                              .watch(
+                                                                postControllerProvider
+                                                                    .notifier,
+                                                              )
+                                                              .deletePost(
+                                                                postModel,
+                                                                context,
+                                                              );
+                                                        },
+                                                        child: const Text(
+                                                          'Delete',
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                  backgroundColor:
-                                                      Pallete.backgroundColor,
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child:
-                                                          const Text('Cancel'),
-                                                    ),
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                        ref
-                                                            .watch(
-                                                              postControllerProvider
-                                                                  .notifier,
-                                                            )
-                                                            .deletePost(
-                                                              postModel,
-                                                              context,
-                                                            );
-                                                      },
-                                                      child:
-                                                          const Text('Delete'),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
+                                                );
+                                              }
                                             },
                                             icon: const Icon(
                                               Icons.more_vert,
@@ -198,13 +209,15 @@ class PostCard extends ConsumerWidget {
                                                   Container(
                                                     padding:
                                                         const EdgeInsets.all(
-                                                            10),
+                                                      10,
+                                                    ),
                                                     child: GestureDetector(
                                                       onTap: () {
                                                         Navigator.push(
                                                           context,
                                                           ProfileView.route(
-                                                              user.uid),
+                                                            user.uid,
+                                                          ),
                                                         );
                                                       },
                                                       child: CircleAvatar(
@@ -212,7 +225,7 @@ class PostCard extends ConsumerWidget {
                                                             NetworkImage(
                                                           user.profilePic,
                                                         ),
-                                                        radius: 22,
+                                                        radius: 18,
                                                       ),
                                                     ),
                                                   ),
@@ -235,8 +248,8 @@ class PostCard extends ConsumerWidget {
                                                                   const TextStyle(
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .w700,
-                                                                fontSize: 18,
+                                                                        .w400,
+                                                                fontSize: 16,
                                                               ),
                                                             ),
                                                           ),
@@ -250,7 +263,7 @@ class PostCard extends ConsumerWidget {
                                                               style: TextStyle(
                                                                 color: Pallete
                                                                     .greyColor,
-                                                                fontSize: 15,
+                                                                fontSize: 14,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w300,
@@ -266,7 +279,7 @@ class PostCard extends ConsumerWidget {
                                                               const TextStyle(
                                                             color: Pallete
                                                                 .greyColor,
-                                                            fontSize: 15,
+                                                            fontSize: 14,
                                                           ),
                                                         ),
                                                     ],
@@ -323,14 +336,15 @@ class PostCard extends ConsumerWidget {
                                                           Padding(
                                                             padding:
                                                                 const EdgeInsets
-                                                                        .only(
-                                                                    right: 6.0),
+                                                                    .only(
+                                                              right: 6.0,
+                                                            ),
                                                             child:
                                                                 AnyLinkPreview(
                                                               cache:
                                                                   const Duration(
-                                                                      seconds:
-                                                                          8),
+                                                                seconds: 8,
+                                                              ),
                                                               displayDirection:
                                                                   UIDirection
                                                                       .uiDirectionHorizontal,
@@ -396,8 +410,9 @@ class PostCard extends ConsumerWidget {
                                               onTap: (bool isLiked) async {
                                                 ref
                                                     .watch(
-                                                        postControllerProvider
-                                                            .notifier)
+                                                      postControllerProvider
+                                                          .notifier,
+                                                    )
                                                     .likePost(
                                                       postModel,
                                                       currentUser,
@@ -461,7 +476,8 @@ class PostCard extends ConsumerWidget {
                                               },
                                               child: CircleAvatar(
                                                 backgroundImage: NetworkImage(
-                                                    user.profilePic),
+                                                  user.profilePic,
+                                                ),
                                                 radius: 24,
                                               ),
                                             ),
@@ -488,7 +504,8 @@ class PostCard extends ConsumerWidget {
                                                   ),
                                                   const Padding(
                                                     padding: EdgeInsets.only(
-                                                        left: 8.0),
+                                                      left: 8.0,
+                                                    ),
                                                     child: Text(
                                                       '1st',
                                                       style: TextStyle(
@@ -535,44 +552,54 @@ class PostCard extends ConsumerWidget {
                                           const Spacer(),
                                           IconButton(
                                             onPressed: () {
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) =>
-                                                    AlertDialog(
-                                                  title:
-                                                      const Text('Delete Post'),
-                                                  content: const Text(
-                                                    'Are you sure you want to delete this post?',
+                                              if (postModel.uid ==
+                                                  currentUser.uid) {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      AlertDialog(
+                                                    title: const Text(
+                                                      'Delete Post',
+                                                    ),
+                                                    content: const Text(
+                                                      'Are you sure you want to delete this post?',
+                                                    ),
+                                                    backgroundColor:
+                                                        Pallete.backgroundColor,
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                            context,
+                                                          );
+                                                        },
+                                                        child: const Text(
+                                                          'Cancel',
+                                                        ),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                            context,
+                                                          );
+                                                          ref
+                                                              .watch(
+                                                                postControllerProvider
+                                                                    .notifier,
+                                                              )
+                                                              .deletePost(
+                                                                postModel,
+                                                                context,
+                                                              );
+                                                        },
+                                                        child: const Text(
+                                                          'Delete',
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                  backgroundColor:
-                                                      Pallete.backgroundColor,
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                      child:
-                                                          const Text('Cancel'),
-                                                    ),
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                        ref
-                                                            .watch(
-                                                              postControllerProvider
-                                                                  .notifier,
-                                                            )
-                                                            .deletePost(
-                                                              postModel,
-                                                              context,
-                                                            );
-                                                      },
-                                                      child:
-                                                          const Text('Delete'),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
+                                                );
+                                              }
                                             },
                                             icon: const Icon(
                                               Icons.more_vert,
@@ -622,10 +649,12 @@ class PostCard extends ConsumerWidget {
                                                   Padding(
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            right: 6.0),
+                                                      right: 6.0,
+                                                    ),
                                                     child: AnyLinkPreview(
                                                       cache: const Duration(
-                                                          seconds: 8),
+                                                        seconds: 8,
+                                                      ),
                                                       displayDirection: UIDirection
                                                           .uiDirectionHorizontal,
                                                       link: postModel.link,
