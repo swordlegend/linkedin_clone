@@ -4,7 +4,6 @@ import 'package:linkedin/apis/job_api.dart';
 import 'package:linkedin/core/core.dart';
 import 'package:linkedin/features/auth/controllers/auth_controller.dart';
 import 'package:linkedin/models/jobs_model.dart';
-import 'package:linkedin/models/user_model.dart';
 
 final jobsControllerProvider = StateNotifierProvider<JobsController, bool>(
   (ref) {
@@ -37,7 +36,6 @@ class JobsController extends StateNotifier<bool> {
   void bookmark(
     JobModel jobModel,
     BuildContext context,
-    UserModel currentUser,
   ) async {
     bool isBookmarked = jobModel.isBookmarked;
 
@@ -46,7 +44,7 @@ class JobsController extends StateNotifier<bool> {
     } else {
       isBookmarked = true;
     }
-    jobModel.copyWith(isBookmarked: isBookmarked);
+    jobModel.copyWith(isBookmarked: !isBookmarked);
     state = true;
     final res = await _jobApi.bookmarkJob(jobModel);
     res.fold(

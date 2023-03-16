@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:linkedin/features/jobs/controllers/jobs_controller.dart';
 import 'package:linkedin/models/jobs_model.dart';
 
 class JobCard extends ConsumerWidget {
@@ -49,8 +49,17 @@ class JobCard extends ConsumerWidget {
           ),
         ),
         IconButton(
-          onPressed: () {},
-          icon: const Icon(CupertinoIcons.bookmark),
+          onPressed: () {
+            ref.watch(jobsControllerProvider.notifier).bookmark(
+                  jobModel,
+                  context,
+                );
+          },
+          icon: Icon(
+            jobModel.isBookmarked == true
+                ? Icons.bookmark
+                : Icons.bookmark_border,
+          ),
         ),
       ],
     );

@@ -51,8 +51,6 @@ class JobApi implements IJobApi {
     return documents.documents;
   }
 
-
-
   @override
   FutureEitherVoid deletePost(JobModel jobModel) async {
     try {
@@ -68,17 +66,15 @@ class JobApi implements IJobApi {
       return left(Failure(e.toString(), st));
     }
   }
-  
+
   @override
   FutureEitherVoid bookmarkJob(JobModel jobModel) async {
-  try {
+    try {
       await _db.updateDocument(
         databaseId: AppwriteConstants.databaseId,
         collectionId: AppwriteConstants.jobsCollection,
         documentId: jobModel.id,
-        data: {
-          'isBookmarked': jobModel.isBookmarked,
-        }
+        data: jobModel.toMap(),
       );
       return right(null);
     } on AppwriteException catch (e, st) {
