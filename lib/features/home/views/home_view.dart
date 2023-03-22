@@ -5,7 +5,7 @@ import 'package:linkedin/constants/constants.dart';
 import 'package:linkedin/features/home/widgets/side_drawer.dart';
 import 'package:linkedin/features/jobs/widgets/create_job_view.dart';
 import 'package:linkedin/features/search/views/search_view.dart';
-import 'package:linkedin/theme/pallete.dart';
+import 'package:linkedin/theme/theme.dart';
 
 class HomeView extends ConsumerStatefulWidget {
   static route() => MaterialPageRoute(
@@ -28,6 +28,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = ref.watch(themeNotifierProvider);
+
     return Scaffold(
       appBar: UIConstants.appBar2(
         context: context,
@@ -40,6 +42,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
         icon: Icons.message_rounded,
         onIconTap: () {},
         title: 'Search',
+        col: theme.bottomNavigationBarTheme.selectedItemColor,
+        bgColor: theme.appBarTheme.backgroundColor,
       ),
       body: IndexedStack(
         index: page,
@@ -57,7 +61,9 @@ class _HomeViewState extends ConsumerState<HomeView> {
           : page == 4
               ? FloatingActionButton(
                   onPressed: () {
-                    showDialog(context: context, builder: (context) => const CreateJobView());
+                    showDialog(
+                        context: context,
+                        builder: (context) => const CreateJobView());
                   },
                   child: const Icon(
                     Icons.add,
@@ -68,7 +74,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
               : null,
       drawer: const SideDrawer(),
       bottomNavigationBar: CupertinoTabBar(
-        backgroundColor: Pallete.lightBackgroundColor,
+        backgroundColor: theme.bottomNavigationBarTheme.backgroundColor,
         currentIndex: page,
         iconSize: 24,
         onTap: onPageChange,
@@ -76,35 +82,35 @@ class _HomeViewState extends ConsumerState<HomeView> {
           BottomNavigationBarItem(
             icon: Icon(
               page == 0 ? CupertinoIcons.home : Icons.home_rounded,
-              color: Pallete.whiteColor,
+              color: theme.bottomNavigationBarTheme.selectedItemColor,
             ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               page == 1 ? Icons.people_alt_rounded : Icons.people_sharp,
-              color: Pallete.whiteColor,
+              color: theme.bottomNavigationBarTheme.selectedItemColor,
             ),
             label: 'My Network',
           ),
-          const BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: Icon(
               Icons.add_box,
-              color: Pallete.whiteColor,
+              color: theme.bottomNavigationBarTheme.selectedItemColor,
             ),
             label: 'Post',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               page == 3 ? Icons.notifications_rounded : Icons.notifications,
-              color: Pallete.whiteColor,
+              color: theme.bottomNavigationBarTheme.selectedItemColor,
             ),
             label: 'Notifications',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               page == 4 ? Icons.work_rounded : Icons.work_outline_rounded,
-              color: Pallete.whiteColor,
+              color: theme.bottomNavigationBarTheme.selectedItemColor,
             ),
             label: 'Jobs',
           ),

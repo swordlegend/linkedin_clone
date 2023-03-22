@@ -24,10 +24,13 @@ class _SearchViewState extends ConsumerState<SearchView> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = ref.watch(themeNotifierProvider);
     final appBarTextFieldBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(6),
-      borderSide: const BorderSide(
-        color: Pallete.backgroundColor,
+      borderSide: BorderSide(
+        color: ref.watch(themeNotifierProvider.notifier).mode == ThemeMode.dark
+            ? Pallete.backgroundColor
+            : Pallete.whiteColor,
       ),
     );
     return Scaffold(
@@ -45,15 +48,19 @@ class _SearchViewState extends ConsumerState<SearchView> {
               contentPadding: const EdgeInsets.all(10).copyWith(
                 left: 20,
               ),
-              fillColor: Pallete.backgroundColor,
+              fillColor: ref.watch(themeNotifierProvider.notifier).mode ==
+                      ThemeMode.dark
+                  ? Pallete.backgroundColor
+                  : Pallete.whiteColor,
               filled: true,
               enabledBorder: appBarTextFieldBorder,
               focusedBorder: appBarTextFieldBorder,
               hintText: 'Search',
-              hintStyle: const TextStyle(
+              hintStyle: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w300,
-                color: Pallete.whiteColor,
+                // ignore: deprecated_member_use
+                color: theme.textTheme.bodyText2!.color!,
               ),
             ),
           ),

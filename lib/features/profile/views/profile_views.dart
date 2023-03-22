@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linkedin/common/common.dart';
 import 'package:linkedin/constants/constants.dart';
 import 'package:linkedin/features/auth/controllers/auth_controller.dart';
+import 'package:linkedin/features/home/widgets/settings_view.dart';
 import 'package:linkedin/features/search/views/search_view.dart';
+import 'package:linkedin/theme/app_theme.dart';
 
 class ProfileView extends ConsumerStatefulWidget {
   static route(String uid) => MaterialPageRoute(
@@ -26,6 +28,7 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
   Widget build(BuildContext context) {
     final currentUser = ref.watch(currentUserDetailProvider).value;
     final user = ref.watch(userDetailsProvider(widget.uid));
+    final theme = ref.watch(themeNotifierProvider);
 
     return currentUser == null
         ? const Loader()
@@ -44,9 +47,22 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
                       ),
                     );
                   },
-                  icon: Icons.settings,
-                  onIconTap: () {},
+                  icon: currentUser.uid == data.uid
+                      ? Icons.settings
+                      : Icons.more_vert,
+                  onIconTap: currentUser.uid == data.uid
+                      ? () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SettingsView(),
+                            ),
+                          );
+                        }
+                      : () {},
                   title: data.name,
+                  col: theme.bottomNavigationBarTheme.selectedItemColor,
+                  bgColor: theme.appBarTheme.backgroundColor,
                 ),
                 body: Center(
                   child: SingleChildScrollView(

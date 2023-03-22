@@ -20,14 +20,14 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: 'LinkedIn',
-      theme: AppTheme.theme,
+      theme: ref.watch(themeNotifierProvider),
       home: Consumer(
         builder: (context, ref, child) {
           return ref.watch(currentUserProvider).when(

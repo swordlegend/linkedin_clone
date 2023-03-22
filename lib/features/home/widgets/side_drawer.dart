@@ -1,10 +1,12 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linkedin/common/common.dart';
 import 'package:linkedin/features/auth/controllers/auth_controller.dart';
 import 'package:linkedin/features/home/widgets/settings_view.dart';
 import 'package:linkedin/features/profile/views/profile_views.dart';
-import 'package:linkedin/theme/pallete.dart';
+import 'package:linkedin/theme/theme.dart';
 
 class SideDrawer extends ConsumerWidget {
   const SideDrawer({super.key});
@@ -12,10 +14,10 @@ class SideDrawer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentUser = ref.watch(currentUserDetailProvider);
+    final theme = ref.watch(themeNotifierProvider);
 
     return SafeArea(
       child: Drawer(
-        backgroundColor: Pallete.backgroundColor,
         child: currentUser.when(
           data: (data) {
             return data == null
@@ -23,7 +25,8 @@ class SideDrawer extends ConsumerWidget {
                 : Column(
                     children: [
                       SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.05),
+                        height: MediaQuery.of(context).size.height * 0.05,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 18.0),
                         child: Align(
@@ -42,15 +45,16 @@ class SideDrawer extends ConsumerWidget {
                         ),
                       ),
                       SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.01),
+                        height: MediaQuery.of(context).size.height * 0.01,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 18.0),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             data.name,
-                            style: const TextStyle(
-                              color: Pallete.whiteColor,
+                            style: TextStyle(
+                              color: theme.textTheme.bodyText1!.color!,
                               fontSize: 18.0,
                               fontWeight: FontWeight.w600,
                             ),
@@ -63,10 +67,16 @@ class SideDrawer extends ConsumerWidget {
                           alignment: Alignment.centerLeft,
                           child: GestureDetector(
                             onTap: () {},
-                            child: const Text(
+                            child: Text(
                               'View Profile',
                               style: TextStyle(
-                                color: Pallete.greyColor,
+                                color: ref
+                                            .watch(
+                                                themeNotifierProvider.notifier)
+                                            .mode ==
+                                        ThemeMode.dark
+                                    ? Pallete.whiteColor.withOpacity(0.7)
+                                    : Pallete.blackColor.withOpacity(0.7),
                                 fontSize: 15.0,
                                 fontWeight: FontWeight.w400,
                               ),
@@ -75,15 +85,21 @@ class SideDrawer extends ConsumerWidget {
                         ),
                       ),
                       SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 18.0),
+                        height: MediaQuery.of(context).size.height * 0.02,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 18.0),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             '65 profile views',
                             style: TextStyle(
-                              color: Pallete.greyColor,
+                              color: ref
+                                          .watch(themeNotifierProvider.notifier)
+                                          .mode ==
+                                      ThemeMode.dark
+                                  ? Pallete.whiteColor.withOpacity(0.7)
+                                  : Pallete.blackColor.withOpacity(0.7),
                               fontSize: 14.0,
                               fontWeight: FontWeight.w400,
                             ),
@@ -91,23 +107,28 @@ class SideDrawer extends ConsumerWidget {
                         ),
                       ),
                       SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.01),
-                      const Divider(
-                        color: Pallete.greyColor,
+                        height: MediaQuery.of(context).size.height * 0.01,
+                      ),
+                      Divider(
+                        color: ref.watch(themeNotifierProvider.notifier).mode ==
+                                ThemeMode.dark
+                            ? Pallete.whiteColor
+                            : Pallete.blackColor,
                         thickness: 0.5,
                       ),
                       SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.015),
+                        height: MediaQuery.of(context).size.height * 0.015,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 18.0),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: GestureDetector(
                             onTap: () {},
-                            child: const Text(
+                            child: Text(
                               'Groups',
                               style: TextStyle(
-                                color: Pallete.whiteColor,
+                                color: theme.textTheme.bodyText2!.color!,
                                 fontSize: 20.0,
                               ),
                             ),
@@ -115,17 +136,18 @@ class SideDrawer extends ConsumerWidget {
                         ),
                       ),
                       SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.018),
+                        height: MediaQuery.of(context).size.height * 0.018,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 18.0),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: GestureDetector(
                             onTap: () {},
-                            child: const Text(
+                            child: Text(
                               'Events',
                               style: TextStyle(
-                                color: Pallete.whiteColor,
+                                color: theme.textTheme.bodyText2!.color!,
                                 fontSize: 20.0,
                               ),
                             ),
@@ -133,13 +155,18 @@ class SideDrawer extends ConsumerWidget {
                         ),
                       ),
                       SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.47),
-                      const Divider(
-                        color: Pallete.greyColor,
+                        height: MediaQuery.of(context).size.height * 0.47,
+                      ),
+                      Divider(
+                        color: ref.watch(themeNotifierProvider.notifier).mode ==
+                                ThemeMode.dark
+                            ? Pallete.whiteColor
+                            : Pallete.blackColor,
                         thickness: 0.5,
                       ),
                       SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.015),
+                        height: MediaQuery.of(context).size.height * 0.015,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 18.0),
                         child: Align(
@@ -152,16 +179,15 @@ class SideDrawer extends ConsumerWidget {
                               );
                             },
                             child: Row(
-                              children: const [
-                                Icon(
+                              children: [
+                                const Icon(
                                   Icons.settings,
-                                  color: Pallete.whiteColor,
                                 ),
-                                SizedBox(width: 10.0),
+                                const SizedBox(width: 10.0),
                                 Text(
                                   'Settings',
                                   style: TextStyle(
-                                    color: Pallete.whiteColor,
+                                    color: theme.textTheme.bodyText2!.color!,
                                     fontSize: 20.0,
                                   ),
                                 ),

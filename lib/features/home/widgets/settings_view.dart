@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linkedin/common/common.dart';
 import 'package:linkedin/features/auth/controllers/auth_controller.dart';
+import 'package:linkedin/theme/theme.dart';
 
 class SettingsView extends ConsumerStatefulWidget {
   static route() => MaterialPageRoute(
@@ -14,13 +16,23 @@ class SettingsView extends ConsumerStatefulWidget {
 }
 
 class _SettingsViewState extends ConsumerState<SettingsView> {
+  void toggleTheme(WidgetRef ref) {
+    ref.read(themeNotifierProvider.notifier).toggleTheme();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final currentUser = ref.watch(currentUserDetailProvider);
+    final theme = ref.watch(themeNotifierProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Text(
+          'Settings',
+          // ignore: deprecated_member_use
+          style: TextStyle(color: theme.textTheme.bodyText2!.color!),
+        ),
         centerTitle: true,
       ),
       body: currentUser.when(
@@ -48,7 +60,13 @@ class _SettingsViewState extends ConsumerState<SettingsView> {
                                 .logout(context);
                           },
                           child: const Text('Sign Out'),
-                        )
+                        ),
+                        CupertinoSwitch(
+                          value:
+                              ref.watch(themeNotifierProvider.notifier).mode ==
+                                  ThemeMode.dark,
+                          onChanged: (val) => toggleTheme(ref),
+                        ),
                       ],
                     ),
                   ),

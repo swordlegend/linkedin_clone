@@ -4,7 +4,6 @@ import 'package:linkedin/common/common.dart';
 import 'package:linkedin/features/auth/controllers/auth_controller.dart';
 import 'package:linkedin/features/profile/views/profile_views.dart';
 import 'package:linkedin/models/notification_model.dart' as model;
-import 'package:linkedin/theme/pallete.dart';
 
 class NotificationTile extends ConsumerWidget {
   final model.Notification notification;
@@ -46,7 +45,6 @@ class NotificationTile extends ConsumerWidget {
         onPressed: () {},
         icon: const Icon(
           Icons.more_vert,
-          color: Pallete.greyColor,
         ),
       ),
       title: Text(notification.text),

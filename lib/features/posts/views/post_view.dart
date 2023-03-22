@@ -52,6 +52,7 @@ class _PostViewState extends ConsumerState<PostView> {
   Widget build(BuildContext context) {
     final currentUser = ref.watch(currentUserDetailProvider);
     final isLoading = ref.watch(postControllerProvider);
+    final theme = ref.watch(themeNotifierProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -69,7 +70,8 @@ class _PostViewState extends ConsumerState<PostView> {
               onTap: sharePost,
               label: 'Post',
               backgroundColor: Pallete.lightBlueColor,
-              textColor: Pallete.whiteColor,
+              // ignore: deprecated_member_use
+              textColor: theme.textTheme.bodyText2!.color!,
             ),
           ),
         ],
@@ -122,7 +124,8 @@ class _PostViewState extends ConsumerState<PostView> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 12.0),
+                                  horizontal: 12.0,
+                                ),
                                 child: TextField(
                                   controller: postTextController,
                                   style: const TextStyle(

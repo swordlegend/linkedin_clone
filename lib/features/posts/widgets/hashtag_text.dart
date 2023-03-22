@@ -1,9 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linkedin/features/posts/views/hashtag_view.dart';
 import 'package:linkedin/theme/theme.dart';
 
-class HashtagText extends StatelessWidget {
+class HashtagText extends ConsumerWidget {
   final String text;
   const HashtagText({
     super.key,
@@ -11,7 +12,8 @@ class HashtagText extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(themeNotifierProvider);
     List<TextSpan> textspans = [];
 
     text.split(' ').forEach((element) {
@@ -58,6 +60,10 @@ class HashtagText extends StatelessWidget {
     return RichText(
       text: TextSpan(
         children: textspans,
+        style: TextStyle(
+          // ignore: deprecated_member_use
+          color: theme.textTheme.bodyText2!.color!,
+        )
       ),
     );
   }

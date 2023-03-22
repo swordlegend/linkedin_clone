@@ -147,8 +147,15 @@ class PostCard extends ConsumerWidget {
                                                     content: const Text(
                                                       'Are you sure you want to delete this post?',
                                                     ),
-                                                    backgroundColor:
-                                                        Pallete.backgroundColor,
+                                                    backgroundColor: ref
+                                                                .watch(
+                                                                    themeNotifierProvider
+                                                                        .notifier)
+                                                                .mode ==
+                                                            ThemeMode.dark
+                                                        ? Pallete
+                                                            .backgroundColor
+                                                        : Pallete.whiteColor,
                                                     actions: [
                                                       TextButton(
                                                         onPressed: () {
@@ -363,8 +370,14 @@ class PostCard extends ConsumerWidget {
                                           ),
                                         ),
                                       ),
-                                      const Divider(
-                                        color: Pallete.greyColor,
+                                      Divider(
+                                        color: ref
+                                                    .watch(themeNotifierProvider
+                                                        .notifier)
+                                                    .mode ==
+                                                ThemeMode.dark
+                                            ? Pallete.whiteColor
+                                            : Pallete.blackColor,
                                         thickness: 0.2,
                                       ),
                                       Padding(
@@ -564,8 +577,15 @@ class PostCard extends ConsumerWidget {
                                                     content: const Text(
                                                       'Are you sure you want to delete this post?',
                                                     ),
-                                                    backgroundColor:
-                                                        Pallete.backgroundColor,
+                                                    backgroundColor: ref
+                                                                .watch(
+                                                                    themeNotifierProvider
+                                                                        .notifier)
+                                                                .mode ==
+                                                            ThemeMode.dark
+                                                        ? Pallete
+                                                            .backgroundColor
+                                                        : Pallete.whiteColor,
                                                     actions: [
                                                       TextButton(
                                                         onPressed: () {
@@ -661,8 +681,15 @@ class PostCard extends ConsumerWidget {
                                                     ),
                                                   ),
                                                 ],
-                                                const Divider(
-                                                  color: Pallete.greyColor,
+                                                Divider(
+                                                  color: ref
+                                                              .watch(
+                                                                  themeNotifierProvider
+                                                                      .notifier)
+                                                              .mode ==
+                                                          ThemeMode.dark
+                                                      ? Pallete.whiteColor
+                                                      : Pallete.blackColor,
                                                   thickness: 0.2,
                                                 ),
                                                 Padding(
@@ -786,8 +813,14 @@ class PostCard extends ConsumerWidget {
                                         ],
                                       ),
                                     ],
-                                    const Divider(
-                                      color: Pallete.greyColor,
+                                    Divider(
+                                      color: ref
+                                                  .watch(themeNotifierProvider
+                                                      .notifier)
+                                                  .mode ==
+                                              ThemeMode.dark
+                                          ? Pallete.whiteColor
+                                          : Pallete.blackColor,
                                       thickness: 0.2,
                                     ),
                                   ],

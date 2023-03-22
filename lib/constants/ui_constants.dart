@@ -30,6 +30,8 @@ class UIConstants {
     required IconData icon,
     required VoidCallback onIconTap,
     required String title,
+    Color? col,
+    Color? bgColor = Pallete.searchBarColor,
   }) {
     return AppBar(
       title: GestureDetector(
@@ -38,25 +40,29 @@ class UIConstants {
           width: MediaQuery.of(context).size.width * 0.70,
           padding: const EdgeInsets.symmetric(vertical: 6),
           decoration: BoxDecoration(
-            color: Pallete.searchBarColor,
+            color: bgColor,
             borderRadius: BorderRadius.circular(6),
+            border: Border.all(
+              color: Pallete.blackColor.withOpacity(0.2),
+              width: 1,
+            ),
           ),
           child: Row(
             children: [
               const SizedBox(
                 width: 6,
               ),
-              const Icon(
+              Icon(
                 Icons.search,
-                color: Pallete.whiteColor,
+                color: col,
               ),
               const SizedBox(
                 width: 6,
               ),
               Text(
                 title,
-                style: const TextStyle(
-                  color: Pallete.whiteColor,
+                style: TextStyle(
+                  color: col,
                   fontSize: 16,
                   fontWeight: FontWeight.w300,
                 ),
@@ -68,7 +74,10 @@ class UIConstants {
       actions: [
         IconButton(
           onPressed: onIconTap,
-          icon: Icon(icon),
+          icon: Icon(
+            icon,
+            color: col,
+          ),
         ),
       ],
     );
