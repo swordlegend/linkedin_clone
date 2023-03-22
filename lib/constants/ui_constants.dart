@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkedin/constants/constants.dart';
 import 'package:linkedin/features/jobs/view/jobs_view.dart';
+import 'package:linkedin/features/network/page/network_view.dart';
 import 'package:linkedin/features/notification/view/notification_view.dart';
 import 'package:linkedin/features/posts/views/post_view.dart';
 import 'package:linkedin/features/posts/views/post_list.dart';
@@ -77,8 +78,8 @@ class UIConstants {
     // Center(child: Text('Home')),
     // HomeView(),
     PostList(),
-    Center(child: Text('My Network')),
-    // NetworkView(),
+    // Center(child: Text('My Network')),
+    NetworkView(),
     // Center(child: Text('Post')),
     PostView(),
     // Center(child: Text('Notifications')),

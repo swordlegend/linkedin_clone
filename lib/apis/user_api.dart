@@ -16,11 +16,21 @@ abstract class IUserApi {
   Future<model.Document> getUserData(String uid);
   Future<List<model.Document>> searchUserByName(String name);
   FutureEitherVoid updateUserData(UserModel userModel);
+  Future<List> getAllUsers();
 }
 
 class UserApi implements IUserApi {
   final Databases _database;
   UserApi({required Databases database}) : _database = database;
+
+  @override
+  Future<List> getAllUsers() async {
+    final users = await _database.listDocuments(
+      databaseId: AppwriteConstants.databaseId,
+      collectionId: AppwriteConstants.usersCollection,
+    );
+    return users.documents;
+  }
 
   @override
   Future<model.Document> getUserData(String uid) {
