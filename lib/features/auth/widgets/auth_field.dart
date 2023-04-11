@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:linkedin/theme/theme.dart';
 
-class AuthField extends StatelessWidget {
+class AuthField extends ConsumerWidget {
   final TextEditingController controller;
   final String hintText;
   final bool isPassword;
@@ -13,7 +14,8 @@ class AuthField extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(themeNotifierProvider);
     return TextFormField(
       controller: controller,
       obscureText: isPassword,
@@ -27,8 +29,8 @@ class AuthField extends StatelessWidget {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5),
-          borderSide: const BorderSide(
-            color: Pallete.whiteColor,
+          borderSide: BorderSide(
+            color: theme.textTheme.bodyMedium!.color!,
           ),
         ),
         contentPadding: const EdgeInsets.all(22),

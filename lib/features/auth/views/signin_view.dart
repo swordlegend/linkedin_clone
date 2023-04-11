@@ -41,6 +41,7 @@ class _SignInViewState extends ConsumerState<SignInView> {
   @override
   Widget build(BuildContext context) {
     final isLoading = ref.watch(authControllerProvider);
+    final theme = ref.watch(themeNotifierProvider);
 
     return Scaffold(
       appBar: appbar,
@@ -54,14 +55,20 @@ class _SignInViewState extends ConsumerState<SignInView> {
                     SizedBox(height: MediaQuery.of(context).size.height * 0.15),
                     Container(
                       decoration: BoxDecoration(
-                        color: Pallete.lightBackgroundColor,
+                        color: theme.brightness == Brightness.dark
+                            ? Pallete.lightBackgroundColor
+                            : Pallete.whiteColor,
+                        // color: Pallete.whiteColor,
                         borderRadius: BorderRadius.circular(10),
-                        boxShadow: const [
+                        boxShadow: [
                           BoxShadow(
-                            color: Pallete.backgroundColor,
+                            color: theme.brightness == Brightness.dark
+                                ? Pallete.backgroundColor
+                                : Pallete.greyColor,
+                            // color: Pallete.backgroundColor,
                             spreadRadius: 3,
                             blurRadius: 5,
-                            offset: Offset(0, 3),
+                            offset: const Offset(0, 3),
                           ),
                         ],
                       ),
@@ -146,8 +153,9 @@ class _SignInViewState extends ConsumerState<SignInView> {
                             child: RichText(
                               text: TextSpan(
                                 text: "New to LinkedIn?",
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 18,
+                                  color: theme.textTheme.bodyMedium!.color!,
                                 ),
                                 children: [
                                   TextSpan(

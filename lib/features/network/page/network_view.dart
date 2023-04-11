@@ -28,86 +28,91 @@ class _NetworkViewState extends ConsumerState<NetworkView> {
                 ),
                 itemBuilder: (context, index) {
                   final usr = users[index];
-                  return SizedBox(
+                  return Container(
                     height: 140,
                     width: 60,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Pallete.blueColor,
-                          width: 0.8,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Pallete.blueColor,
+                        width: 0.8,
                       ),
-                      child: Column(
-                        children: [
-                          Stack(
-                            children: [
-                              SizedBox(
-                                height: 40,
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10),
-                                      topRight: Radius.circular(10),
-                                    ),
-                                    color: Colors.grey,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      children: [
+                        Stack(
+                          children: [
+                            SizedBox(
+                              height: 32,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10),
                                   ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: const [
-                                      Padding(
-                                        padding: EdgeInsets.only(right: 4.0),
-                                        child: Icon(Icons.close),
-                                      ),
-                                    ],
+                                  color: Colors.grey,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: const [
+                                    Padding(
+                                      padding: EdgeInsets.only(right: 4.0),
+                                      child: Icon(Icons.close),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      ProfileView.route(usr.data['\$id']),
+                                    );
+                                  },
+                                  child: CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                      usr.data['profilePic'],
+                                    ),
+                                    radius: 25,
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        ProfileView.route(usr.data['\$id']),
-                                      );
-                                    },
-                                    child: CircleAvatar(
-                                      backgroundImage: NetworkImage(
-                                        usr.data['profilePic'],
-                                      ),
-                                      radius: 36,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 4),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              ProfileView.route(usr.data['\$id']),
+                            );
+                          },
+                          child: Text(
                             usr.data['name'],
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
                             ),
                           ),
-                          Text(
-                            usr.data['bio'],
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14,
-                            ),
-                            maxLines: 1,
+                        ),
+                        Text(
+                          usr.data['bio'],
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 14,
                           ),
-                          const SizedBox(height: 4),
-                          TextButton(
-                            onPressed: () {},
-                            child: const Text('Connect'),
-                          ),
-                        ],
-                      ),
+                          maxLines: 1,
+                        ),
+                        const SizedBox(height: 4),
+                        TextButton(
+                          onPressed: () {},
+                          child: const Text('Connect'),
+                        ),
+                      ],
                     ),
                   );
                 },

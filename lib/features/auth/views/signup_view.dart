@@ -46,6 +46,7 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
   @override
   Widget build(BuildContext context) {
     final isLoading = ref.watch(authControllerProvider);
+    final theme = ref.watch(themeNotifierProvider);
 
     return Scaffold(
       appBar: appbar,
@@ -59,14 +60,18 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
                     SizedBox(height: MediaQuery.of(context).size.height * 0.1),
                     Container(
                       decoration: BoxDecoration(
-                        color: Pallete.lightBackgroundColor,
+                        color: theme.brightness == Brightness.dark
+                            ? Pallete.lightBackgroundColor
+                            : Pallete.whiteColor,
                         borderRadius: BorderRadius.circular(10),
-                        boxShadow: const [
+                        boxShadow: [
                           BoxShadow(
-                            color: Pallete.backgroundColor,
+                            color: theme.brightness == Brightness.dark
+                                ? Pallete.backgroundColor
+                                : Pallete.greyColor,
                             spreadRadius: 3,
                             blurRadius: 5,
-                            offset: Offset(0, 3),
+                            offset: const Offset(0, 3),
                           ),
                         ],
                       ),
@@ -133,7 +138,6 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
                           ),
                           const SizedBox(height: 20),
                           const Divider(
-                            color: Pallete.backgroundColor,
                             indent: 16.0,
                             endIndent: 16.0,
                             thickness: 2,
@@ -149,8 +153,9 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
                             child: RichText(
                               text: TextSpan(
                                 text: 'Already registered?',
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 18,
+                                  color: theme.textTheme.bodyMedium!.color!,
                                 ),
                                 children: [
                                   TextSpan(
