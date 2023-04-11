@@ -56,20 +56,6 @@ android {
         ]
     }
 
-    flavorDimensions "default"
-    productFlavors { 
-        development {
-            dimension "default"
-            applicationIdSuffix "dev"
-            manifestPlaceholders = [appName: "LinkedIn Clone [DEV]"]
-        } 
-        production {
-            dimension "default"
-            applicationIdSuffix ""
-            manifestPlaceholders = [appName: "LinkedIn Clone"]
-        } 
-    }
-
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
