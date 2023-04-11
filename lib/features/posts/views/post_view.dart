@@ -69,9 +69,11 @@ class _PostViewState extends ConsumerState<PostView> {
             child: RoundedSmallButton(
               onTap: sharePost,
               label: 'Post',
-              backgroundColor: Pallete.lightBlueColor,
+              backgroundColor: theme.brightness == Brightness.dark
+                  ? Pallete.lightBlueColor
+                  : Pallete.blueColor,
               // ignore: deprecated_member_use
-              textColor: theme.textTheme.bodyText2!.color!,
+              textColor: Pallete.whiteColor,
             ),
           ),
         ],
