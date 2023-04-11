@@ -26,9 +26,8 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
-      title: 'LinkedIn',
+      title: 'LinkedIn Dev',
       theme: ref.watch(themeNotifierProvider),
-      debugShowCheckedModeBanner: false,
       home: Consumer(
         builder: (context, ref, child) {
           return ref.watch(currentUserProvider).when(

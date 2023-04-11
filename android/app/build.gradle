@@ -52,8 +52,22 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         manifestPlaceholders += [
-         'appAuthRedirectScheme': 'http://localhost/v1/account/sessions/oauth2/callback/google/640991b1cad129e5eb08'
+         'appAuthRedirectScheme': 'https://cloud.appwrite.io/v1/account/sessions/oauth2/callback/google/6435cfe5498c80983bcf'
         ]
+    }
+
+    flavorDimensions "default"
+    productFlavors { 
+        development {
+            dimension "default"
+            applicationIdSuffix "dev"
+            manifestPlaceholders = [appName: "LinkedIn Clone [DEV]"]
+        } 
+        production {
+            dimension "default"
+            applicationIdSuffix ""
+            manifestPlaceholders = [appName: "LinkedIn Clone"]
+        } 
     }
 
     buildTypes {
