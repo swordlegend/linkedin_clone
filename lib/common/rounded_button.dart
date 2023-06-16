@@ -27,6 +27,12 @@ class RoundedSmallButton extends StatelessWidget {
             fontSize: 16,
           ),
         ),
+        shape: const StadiumBorder(
+          side: BorderSide(
+            color: Pallete.blueColor,
+            width: 1,
+          ),
+        ),
         backgroundColor: backgroundColor,
         labelPadding: const EdgeInsets.symmetric(
           horizontal: 20,

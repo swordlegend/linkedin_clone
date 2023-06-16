@@ -75,7 +75,8 @@ class AuthController extends StateNotifier<bool> {
         name: getNameFromEmail(email),
         profilePic: 'https://avatars.githubusercontent.com/u/62945306?v=4',
         // profilePic: 'https://avatars.githubusercontent.com/u/108295554?v=4',
-        bannerPic: '',
+        bannerPic:
+            'https://raw.githubusercontent.com/imobasshir/imobasshir/main/assets/images/test.jpg',
         uid: r.$id,
         bio: '',
       );
