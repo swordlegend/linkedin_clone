@@ -52,9 +52,9 @@ class _NetworkViewState extends ConsumerState<NetworkView> {
                                   ),
                                   color: Colors.grey,
                                 ),
-                                child: Row(
+                                child: const Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
-                                  children: const [
+                                  children: [
                                     Padding(
                                       padding: EdgeInsets.only(right: 4.0),
                                       child: Icon(Icons.close),
