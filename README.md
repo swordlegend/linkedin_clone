@@ -19,40 +19,57 @@ flutter run
 ## 📱 Screenshots
 
 ### Light Theme
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/71d47ea3-a496-4d2b-8d4f-20cddc55283f" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/01651420-5863-45f5-bed2-2244f387803b" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/4c73207a-94d1-47b3-9d13-bc0fc1348392" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/786e33db-cc06-46b2-8ad2-008b7d42bbca" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/af542c6d-5def-4451-8bda-04bcfdc5d795" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/edbba9ed-c636-4b9b-afb4-cfb3b16873c8" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/f34d9a37-9a33-46a7-b700-9d3bfcdf647b" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/b41b0137-2778-4bbc-93e5-75abe0b67951" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/a20c35d1-dcc9-4261-b3b3-5ad0ef8bc7d4" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/6eeefc50-2133-4aa5-a2f4-1d330054a262" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/04225b47-aecb-4db8-a035-2f9d90744364" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/5ddb1e10-86c3-4380-abb1-7414f2f0cf0f" width=240>
 
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/b9b2972b-bf51-49a2-944c-d093a09682c6" width=240>
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/d1dc5237-c691-437f-9a00-da6191e33979" width=240>
 
-### Admin or Seller View
+### Dark Theme
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/a32ef044-99e8-49cb-abb6-084f839aab9d" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/e0fe381a-9595-43b3-82ae-4ce5639cb3b7" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/bc0f5146-640b-40b7-ad50-a2803a358d03" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/943163e6-f766-48b0-ac24-2383d18eb63e" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/0881884c-0bfd-4df1-9af3-5ab6bbda068a" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/7c86e488-3dca-40af-8c07-bcb111caa31c" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/8503245e-ab6c-4401-8b78-576e2bcc0701" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/323b962d-baa4-42ac-a7ef-e196ca9489fe" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/2314c887-7d6d-4025-81fd-8afd527db334" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/c457dffb-10dc-41d5-a33f-6b522f1ddf5c" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/a048d74f-642c-4114-95f6-774f20e92862" width=240>
+<img src="https://github.com/imobasshir/linkedin_clone/assets/62945306/a1762b25-fd91-4bbd-be51-627c03b7c834" width=240>
 
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/a6f25a09-b5c3-437c-8f47-eca5582df6e2" width=240>
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/3b7435ad-aa23-4378-ab2f-8d72a4acf747" width=240>
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/c10c1918-e442-493f-9aa5-88fc5c552b53" width=240>
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/320885f9-ed57-473d-9f7d-bd30dbbf8aeb" width=240>
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/19d2bc81-e56c-4611-92d8-2b512eda3a02" width=240>
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/c4f1b34c-2fe4-4f89-a1cf-1578eff7b5f6" width=240>
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/bfb4a0a9-4a09-4efd-8938-d7e7c123a134" width=240>
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/9b8b43b0-d5a3-49e1-9620-44ee12e36699" width=240>
 
-### User View
 
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/c1a1d69a-c6f3-4391-bdd2-f225c3b71b0c" width=240>
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/997d8c7f-2bc6-4c88-ad7f-baf292acf2c5" width=240>
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/46359a29-ff8f-41b0-a4a9-32f55c98b39e" width=240>
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/1fe71da1-f73a-4acc-90d3-25476afbcd9e" width=240>
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/5c8ee146-f775-4161-8f91-f6c5f5d862da" width=240>
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/aa7ed207-2a2a-438f-9231-fa4711627495" width=240>
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/aa1e843e-90f1-4019-92fe-6e6c8449b292" width=240>
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/2e3c2443-ed30-4471-8f77-3a3ce63b1a2c" width=240>
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/1ffd02f1-d690-439f-8fac-91d78562424d" width=240>
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/42416f0b-1104-4896-8e6a-437a6ced2db7" width=240>
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/4f758f06-a09b-40a1-8534-9557e2502fda" width=240>
-<img src="https://github.com/imobasshir/amazon_clone/assets/62945306/35370160-0962-4b28-b7c8-435429e811e4" width=240>
+
 
 ## Tech Stack
 
-Flutter, NodeJs, MongoDB, Cloudinary(For Storage) and Provider State Management.
+Flutter, Appwrite(for Authentication, DB and Storage), and Riverpod State Management.
 
 ## 🧑 Author
 
 ### Mobasshir Imam
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
